@@ -174,7 +174,7 @@ section { padding-block: clamp(30px, 4.5vw, 54px); }
 .btn:hover svg { transform: translateX(4px); }
 .btn.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 .btn.primary:hover { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
-.flow-note { position: absolute; right: max(20px, env(safe-area-inset-right, 0px)); bottom: clamp(120px, 14vw, 170px); display: flex; flex-direction: column; gap: 6px; align-items: flex-end; text-align: right; opacity: .85; }
+.flow-note { position: absolute; right: max(20px, env(safe-area-inset-right, 0px)); bottom: clamp(24px, 4vw, 48px); display: flex; flex-direction: column; gap: 6px; align-items: flex-end; text-align: right; opacity: .85; }
 .cbar { display: flex; align-items: center; gap: 8px; }
 .cbar b { display: block; width: 110px; height: 5px; border-radius: 3px; background: linear-gradient(90deg, var(--cm-0), var(--cm-1), var(--cm-2), var(--cm-3)); }
 .readout { position: relative; margin-top: clamp(28px, 4.5vw, 52px); display: grid; grid-template-columns: repeat(4, 1fr); }
@@ -400,11 +400,10 @@ dialog[open] { animation: pop .45s var(--ease); }
         <p class="lede fade-up" style="--d:.35s" data-t="heroIntro"></p>
         <div class="cta-row fade-up" style="--d:.5s">
           <a class="btn primary" href="#projects">See the projects <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7h12M8 2l5 5-5 5"/></svg></a>
-          <a class="btn dl" id="resumeBtn" href="#" target="_blank" rel="noopener"><span data-t="resumeButton">Résumé (PDF)</span> <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 1v8M3.5 6L7 9.5 10.5 6M1.5 12.5h11"/></svg></a>
+          <a class="btn dl" id="resumeBtn" href="#" target="_blank" rel="noopener"><span data-t="resumeButton">Resume (PDF)</span> <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 1v8M3.5 6L7 9.5 10.5 6M1.5 12.5h11"/></svg></a>
           <a class="btn" href="#contact">Get in touch</a>
         </div>
       </div>
-      <dl class="readout glass fade-up" style="--d:.65s" id="readout"></dl>
     </div>
     <div class="flow-note mono fade-up" style="--d:1s" aria-hidden="true">
       <span>Potential flow · inverted Joukowski section · α = −6°</span>
@@ -501,7 +500,7 @@ const SITE = {
   text: {
     heroTag: 'Aerodynamics · CFD · Composites',
     heroIntro: 'Aerodynamics Team Lead for <strong>Gaucho Racing FSAE</strong> at UC Santa Barbara. I design and simulate wings, diffusers and bodywork in SOLIDWORKS and Ansys Fluent, and manufacture them in carbon fiber.',
-    resumeButton: 'Résumé (PDF)',
+    resumeButton: 'Resume (PDF)',
     aboutTitle: 'About me',
     experienceTitle: 'Gaucho Racing FSAE',
     projectsTitle: 'Aerodynamic packages and tooling',
@@ -514,20 +513,13 @@ const SITE = {
     footerNote: 'Hero animation: potential flow over a Joukowski airfoil.'
   },
 
-  resume: 'Forrest_Drury_Resume.pdf',   // file the résumé buttons open
+  resume: 'Forrest_Drury_Resume.pdf',   // file the resume buttons open
 
   // About section paragraphs, one string per paragraph.
   about: [
     'Third-year Physics B.S. student at UC Santa Barbara and Aerodynamics Team Lead for Gaucho Racing FSAE.',
     'My work covers the full aerodynamic workflow: CAD in SOLIDWORKS, unstructured meshing, steady and transient RANS in Ansys Fluent on HPC clusters, composite manufacturing, and testing on the car.',
     'I have also completed two undergraduate research projects on FSAE underbody and diffuser aerodynamics, and I drive the car in competition.'
-  ],
-
-  readout: [
-    { value: '30', unit: '/ 100', label: 'Placed 30th of 100 teams at competition' },
-    { value: '80', unit: '%', label: 'GR26 downforce, as a share of vehicle mass at 77 mph' },
-    { value: '110', unit: '%', label: 'GR27 downforce target at 77 mph' },
-    { value: '20', unit: 'engineers', label: 'on the aerodynamics team' }
   ],
 
   // Photos. Set src to an image path (e.g. 'img/portrait.jpg'); empty slots show a dashed tile.
@@ -716,7 +708,7 @@ const SITE = {
   contact: [
     { label: 'Email', value: 'fdrury@ucsb.edu', copy: true },
     { label: 'LinkedIn', value: 'linkedin.com/in/forrest-drury-734218335', href: 'https://www.linkedin.com/in/forrest-drury-734218335' },
-    { label: 'Résumé', value: 'Download PDF', href: 'Forrest_Drury_Resume.pdf' }
+    { label: 'Resume', value: 'Download PDF', href: 'Forrest_Drury_Resume.pdf' }
   ]
 };
 
@@ -733,7 +725,6 @@ const mediaHTML = (m, i) => `<figure class="media">${m.src
   : `<canvas class="fig" data-kind="${m.kind}" data-alpha="${m.alpha ?? -6}" data-seed="${i + 1}" role="img" aria-label="${m.caption || m.kind}"></canvas>`}
   ${m.caption ? `<figcaption>${m.caption}</figcaption>` : ''}</figure>`;
 
-$('#readout').innerHTML = SITE.readout.map(r => `<div><dt>${r.label}</dt><dd>${r.value}<small>${r.unit}</small></dd></div>`).join('');
 $('#facts').innerHTML = SITE.facts.map(f => `<li><span>${f[0]}</span><span>${f[1]}</span></li>`).join('');
 const photoHTML = ph => `<figure class="photo ${ph.size || ''} ${ph.src ? 'has-img' : 'empty'}">${ph.src
   ? `<img src="${ph.src}" alt="${ph.caption || ''}" loading="lazy">`
