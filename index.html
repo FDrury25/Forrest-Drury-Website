@@ -8,7 +8,7 @@
 <meta name="description" content="Forrest Drury. Aerodynamics lead at Gaucho Racing FSAE and physics student at UC Santa Barbara. CFD, aerodynamic design and composite manufacturing.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 <script>
 /* Apply a saved theme before first paint. No saved choice = follow the OS. */
 try { var t = localStorage.getItem('fd-theme'); if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
@@ -40,9 +40,9 @@ try { var t = localStorage.getItem('fd-theme'); if (t === 'light' || t === 'dark
   --cm-0: #18A0B0; --cm-1: #2148C9; --cm-2: #B63C8E; --cm-3: #E8622C;
   --body-fill: #F6F8FA;
 
-  --f-display: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
-  --f-body: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
-  --f-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --f-display: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --f-body: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --f-mono: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;   /* small labels, dates, captions */
   --ease: cubic-bezier(.2, .7, .2, 1);
   --r: 18px;
 }
@@ -115,12 +115,12 @@ button { font: inherit; color: inherit; }
   -webkit-backdrop-filter: blur(16px) saturate(150%); backdrop-filter: blur(16px) saturate(150%);
   box-shadow: var(--shadow);
 }
-.mono { font-family: var(--f-mono); font-size: .75rem; letter-spacing: .04em; color: var(--ink-3); }
-.eyebrow { font-family: var(--f-mono); font-size: .75rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); display: flex; align-items: center; gap: 10px; }
-.eyebrow::before { content: ""; width: 22px; height: 1px; background: currentColor; }
+.mono { font-family: var(--f-mono); font-size: .78rem; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.eyebrow { font-size: .95rem; font-weight: 500; color: var(--ink-3); }
+.sec-head .eyebrow, .contact .eyebrow { display: none; }
 section { padding-block: clamp(30px, 4.5vw, 54px); }
 .sec-head { display: flex; flex-direction: column; gap: 12px; margin-bottom: clamp(16px, 2.2vw, 24px); max-width: 44rem; }
-.sec-head h2 { font: 700 clamp(1.4rem, 2.6vw, 1.9rem)/1.1 var(--f-display); font-stretch: 112%; letter-spacing: -.015em; text-wrap: balance; }
+.sec-head h2 { font: 700 clamp(1.4rem, 2.6vw, 1.9rem)/1.1 var(--f-display); font-stretch: 112%; letter-spacing: -.025em; text-wrap: balance; }
 .sec-head p { color: var(--ink-2); max-width: 38rem; }
 
 /* Scroll reveal: class is added by JS only to elements below the fold */
@@ -130,7 +130,7 @@ section { padding-block: clamp(30px, 4.5vw, 54px); }
 /* ---------- Nav ---------- */
 .nav { position: fixed; z-index: 30; top: calc(14px + env(safe-area-inset-top, 0px)); left: 0; right: 0; pointer-events: none; }
 .nav-inner { pointer-events: auto; display: flex; align-items: center; gap: 6px; width: fit-content; max-width: 100%; margin-inline: auto; padding: 6px 8px 6px 16px; border-radius: 999px; background: var(--glass-strong); }
-.brand { font: 800 .95rem/1 var(--f-display); font-stretch: 125%; letter-spacing: .02em; text-decoration: none; padding-right: 10px; border-right: 1px solid var(--line); flex: none; }
+.brand { font: 700 .95rem/1 var(--f-display); letter-spacing: -.02em; text-decoration: none; padding-right: 10px; border-right: 1px solid var(--line); flex: none; }
 .nav-links { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; min-width: 0; }
 .nav-links::-webkit-scrollbar { display: none; }
 .nav-links a { position: relative; flex: none; padding: 8px 12px; border-radius: 999px; text-decoration: none; font-size: .86rem; color: var(--ink-2); transition: color .25s, background-color .25s; }
@@ -157,10 +157,10 @@ section { padding-block: clamp(30px, 4.5vw, 54px); }
 .hero { position: relative; padding-block: clamp(100px, 11vw, 132px) clamp(20px, 3vw, 32px); }
 #flow { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; -webkit-mask-image: linear-gradient(90deg, transparent 4%, #000 52%, #000 88%, transparent); mask-image: linear-gradient(90deg, transparent 4%, #000 52%, #000 88%, transparent); }
 .hero-copy { position: relative; display: flex; flex-direction: column; gap: 22px; max-width: 40rem; }
-.hero h1 { font: 800 clamp(2.8rem, 8.4vw, 6rem)/.9 var(--f-display); font-stretch: 125%; letter-spacing: -.025em; }
+.hero h1 { font: 800 clamp(2.8rem, 8.4vw, 6rem)/.95 var(--f-display); letter-spacing: -.045em; }
 .hero h1 span { display: block; overflow: hidden; padding-bottom: .06em; }
 .hero h1 i { display: block; font-style: normal; animation: rise 1s var(--ease) both; }
-.hero h1 span:nth-child(2) i { animation-delay: .09s; color: transparent; -webkit-text-stroke: 1.5px var(--ink); }
+.hero h1 span:nth-child(2) i { animation-delay: .09s; }
 @keyframes rise { from { transform: translateY(105%); } }
 .fade-up { animation: fadeUp .9s var(--ease) both; animation-delay: var(--d, .3s); }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } }
@@ -181,7 +181,7 @@ section { padding-block: clamp(30px, 4.5vw, 54px); }
 .readout div { padding: 16px 22px; display: flex; flex-direction: column; gap: 6px; border-left: 1px solid var(--line); min-width: 0; }
 .readout div:first-child { border-left: 0; }
 .readout dt { order: 2; font-size: .85rem; line-height: 1.4; color: var(--ink-2); }
-.readout dd { margin: 0; font: 700 clamp(1.6rem, 3vw, 2.2rem)/1 var(--f-display); font-stretch: 112%; font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+.readout dd { margin: 0; font: 700 clamp(1.6rem, 3vw, 2.2rem)/1 var(--f-display); font-stretch: 112%; font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
 .readout dd small { font: 500 .8rem var(--f-mono); color: var(--ink-3); letter-spacing: 0; margin-left: 4px; }
 dl { margin: 0; }
 
@@ -207,7 +207,7 @@ dl { margin: 0; }
 .facts { padding: 8px 24px; }
 .facts li { display: grid; grid-template-columns: 6.5rem 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); font-size: .93rem; }
 .facts li:first-child { border-top: 0; }
-.facts span:first-child { font-family: var(--f-mono); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); padding-top: 3px; }
+.facts span:first-child { font-family: var(--f-mono); font-size: .72rem; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-3); padding-top: 3px; }
 
 /* ---------- Experience ---------- */
 .roles { display: grid; grid-template-columns: 1.3fr 1fr; gap: 16px; }
@@ -246,12 +246,12 @@ dl { margin: 0; }
 .media figcaption { position: absolute; left: 12px; bottom: 10px; padding: 3px 8px; border-radius: 6px; background: var(--glass-strong); font: 400 .66rem var(--f-mono); letter-spacing: .04em; color: var(--ink-2); }
 .card > .media { border-bottom: 1px solid var(--line); }
 .panel { display: flex; flex-direction: column; gap: 8px; padding: 16px 18px 18px; min-width: 0; }
-.status { display: inline-flex; align-items: center; gap: 7px; font: 500 .7rem var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
+.status { display: inline-flex; align-items: center; gap: 7px; font: 500 .7rem var(--f-mono); letter-spacing: .05em; text-transform: uppercase; color: var(--ink-2); }
 .status::before { content: ""; flex: none; width: 6px; height: 6px; border-radius: 50%; background: var(--ink-3); }
 .status.live { color: var(--accent); }
 .status.live::before { background: var(--accent); animation: pulse 2.4s ease-out infinite; }
 @keyframes pulse { 0% { box-shadow: 0 0 0 0 var(--accent); } 70%, 100% { box-shadow: 0 0 0 7px transparent; } }
-.card h3 { font: 700 1.12rem/1.2 var(--f-display); font-stretch: 110%; letter-spacing: -.01em; }
+.card h3 { font: 700 1.12rem/1.2 var(--f-display); font-stretch: 110%; letter-spacing: -.02em; }
 .extra { display: grid; grid-template-rows: 1fr; overflow: hidden; }
 .extra-in { display: flex; flex-direction: column; gap: 10px; min-height: 0; overflow: hidden; }
 .extra-in p { color: var(--ink-2); font-size: .92rem; line-height: 1.5; }
@@ -291,7 +291,7 @@ a.paper-link { color: var(--accent); border-style: solid; border-color: var(--ac
 .skills { padding: 4px 20px; }
 .skill { padding: 14px 0; display: flex; flex-direction: column; gap: 9px; border-top: 1px solid var(--line); }
 .skill:first-child { border-top: 0; }
-.skill h3 { font: 500 .7rem var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3); }
+.skill h3 { font: 500 .7rem var(--f-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; }
 .chip { padding: 4px 10px; border-radius: 8px; border: 1px solid var(--line); font-size: .85rem; background: transparent; transition: border-color .25s, background-color .25s, transform .25s var(--ease); }
 .chip:hover { border-color: var(--accent); background: var(--accent-soft); transform: translateY(-2px); }
@@ -317,19 +317,19 @@ dialog[open] { animation: pop .45s var(--ease); }
 .sheet { background: var(--glass-strong); max-height: inherit; overflow-y: auto; overscroll-behavior: contain; padding: clamp(22px, 4vw, 40px); display: flex; flex-direction: column; gap: 22px; }
 .sheet > * { flex: none; }
 .sheet-head { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; }
-.sheet h3 { font: 800 clamp(1.5rem, 3.4vw, 2.2rem)/1.08 var(--f-display); font-stretch: 115%; letter-spacing: -.015em; margin-top: 8px; text-wrap: balance; }
+.sheet h3 { font: 800 clamp(1.5rem, 3.4vw, 2.2rem)/1.08 var(--f-display); font-stretch: 115%; letter-spacing: -.025em; margin-top: 8px; text-wrap: balance; }
 .x { flex: none; width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line); background: transparent; cursor: pointer; display: grid; place-items: center; transition: transform .3s var(--ease), border-color .25s; }
 .x:hover { transform: rotate(90deg); border-color: var(--accent); }
 .x svg { width: 12px; height: 12px; }
 .sheet .overview { display: flex; flex-direction: column; gap: 12px; color: var(--ink-2); max-width: 44rem; }
 .spec { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
 .spec div { padding: 12px 14px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); margin: 0 -1px -1px 0; }
-.spec dt { font: 400 .68rem var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+.spec dt { font: 400 .68rem var(--f-mono); letter-spacing: .05em; text-transform: uppercase; color: var(--ink-3); }
 .spec dd { margin: 4px 0 0; font-weight: 500; font-size: .93rem; }
 .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
 .gallery .media { border: 1px solid var(--line); border-radius: 12px; }
 .d-sec { display: flex; flex-direction: column; gap: 10px; }
-.d-sec h4 { font: 500 .74rem var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+.d-sec h4 { font: 500 .74rem var(--f-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
 .d-list { display: flex; flex-direction: column; gap: 8px; color: var(--ink-2); font-size: .96rem; max-width: 46rem; }
 
 /* ---------- Responsive ---------- */
@@ -467,7 +467,7 @@ dialog[open] { animation: pop .45s var(--ease); }
       <div class="contact glass">
         <div>
           <p class="eyebrow">Contact</p>
-          <h2 style="margin-top:14px" data-t="contactTitle"></h2>
+          <h2 data-t="contactTitle"></h2>
           <p data-t="contactText"></p>
         </div>
         <ul class="contact-list" id="contactList"></ul>
@@ -1020,12 +1020,12 @@ const FIG = {
     });
     const y = h * .88, x0 = w * .2, x1 = w * .56;
     g.strokeStyle = ink; g.globalAlpha = .6; g.lineWidth = 1; g.beginPath(); g.moveTo(x0, y); g.lineTo(x1, y); g.moveTo(x0, y - 5); g.lineTo(x0, y + 5); g.moveTo(x1, y - 5); g.lineTo(x1, y + 5); g.stroke();
-    g.fillStyle = ink; g.font = '11px "IBM Plex Mono", monospace'; g.textAlign = 'center'; g.fillText('c', (x0 + x1) / 2, y - 6); g.globalAlpha = 1;
+    g.fillStyle = ink; g.font = '11px Inter, Helvetica, Arial, sans-serif'; g.textAlign = 'center'; g.fillText('c', (x0 + x1) / 2, y - 6); g.globalAlpha = 1;
   },
   layup({ g, w, h }) {            // exploded ply stack around a foam core
     const ink = css('--ink'), acc = css('--accent'), L = w * .44, sk = w * .1, d = h * .11, x0 = w * .08;
     const plies = [['0°', 0], ['+45°', 45], ['foam core', null], ['−45°', -45], ['0°', 0]];
-    g.font = '10.5px "IBM Plex Mono", monospace'; g.textBaseline = 'middle';
+    g.font = '10.5px Inter, Helvetica, Arial, sans-serif'; g.textBaseline = 'middle';
     plies.forEach(([label, ang], i) => {
       const y = h * .1 + i * h * .16, p = [[x0 + sk, y], [x0 + sk + L, y], [x0 + L, y + d], [x0, y + d]];
       g.save(); pathOf(g, p); g.closePath(); g.fillStyle = ang === null ? css('--accent-soft') : css('--body-fill'); g.fill(); g.clip();
