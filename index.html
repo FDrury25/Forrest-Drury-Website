@@ -155,7 +155,10 @@ section { padding-block: clamp(30px, 4.5vw, 54px); }
 
 /* ---------- Hero ---------- */
 .hero { position: relative; padding-block: clamp(100px, 11vw, 132px) clamp(20px, 3vw, 32px); }
-#flow { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; -webkit-mask-image: linear-gradient(90deg, transparent 4%, #000 52%, #000 88%, transparent); mask-image: linear-gradient(90deg, transparent 4%, #000 52%, #000 88%, transparent); }
+#flow { --ext: 260px; position: absolute; z-index: -1; left: 0; top: 0; width: 100%; height: calc(100% + var(--ext)); pointer-events: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent 4%, #000 52%, #000 88%, transparent), linear-gradient(180deg, #000 55%, transparent 97%);
+  mask-image: linear-gradient(90deg, transparent 4%, #000 52%, #000 88%, transparent), linear-gradient(180deg, #000 55%, transparent 97%);
+  -webkit-mask-composite: source-in; mask-composite: intersect; }
 .hero-copy { position: relative; display: flex; flex-direction: column; gap: 22px; max-width: 40rem; }
 .hero h1 { font: 800 clamp(2.8rem, 8.4vw, 6rem)/.95 var(--f-display); letter-spacing: -.045em; }
 .hero h1 span { display: block; overflow: hidden; padding-bottom: .06em; }
@@ -340,7 +343,7 @@ dialog[open] { animation: pop .45s var(--ease); }
   .readout { grid-template-columns: repeat(2, 1fr); }
   .readout div:nth-child(3) { border-left: 0; }
   .readout div:nth-child(n+3) { border-top: 1px solid var(--line); }
-  #flow { -webkit-mask-image: linear-gradient(180deg, transparent 30%, #000 62%, #000 86%, transparent); mask-image: linear-gradient(180deg, transparent 30%, #000 62%, #000 86%, transparent); opacity: .8; }
+  #flow { --ext: 140px; opacity: .8; -webkit-mask-image: linear-gradient(180deg, transparent 22%, #000 50%, #000 72%, transparent 98%); mask-image: linear-gradient(180deg, transparent 22%, #000 50%, #000 72%, transparent 98%); -webkit-mask-composite: source-over; mask-composite: add; }
   .hero { padding-bottom: 28px; }
   .hero-copy { padding-bottom: 150px; }
   .flow-note { display: none; }
@@ -499,17 +502,17 @@ const SITE = {
   // Short pieces of text around the page. <strong>…</strong> makes a phrase bold.
   text: {
     heroTag: 'Aerodynamics · CFD · Composites',
-    heroIntro: 'Aerodynamics Team Lead for <strong>Gaucho Racing FSAE</strong> at UC Santa Barbara. I design and simulate wings, diffusers and bodywork in SOLIDWORKS and Ansys Fluent, and manufacture them in carbon fiber.',
+    heroIntro: 'I lead the aerodynamics team at <strong>Gaucho Racing FSAE</strong>, UC Santa Barbara. I design and simulate wings, diffusers and bodywork in SOLIDWORKS and Ansys Fluent, then build them in carbon fiber.',
     resumeButton: 'Resume (PDF)',
     aboutTitle: 'About me',
     experienceTitle: 'Gaucho Racing FSAE',
-    projectsTitle: 'Aerodynamic packages and tooling',
+    projectsTitle: 'What I\'ve been building',
     projectsHint: 'Select a card for the full write-up.',
-    researchTitle: 'Underbody and diffuser studies',
-    skillsTitle: 'Software and methods',
+    researchTitle: 'My undergraduate research',
+    skillsTitle: 'What I work with',
     galleryTitle: 'At the track and in the shop',
     contactTitle: 'Get in touch',
-    contactText: 'Open to internships in CFD and aerodynamics.',
+    contactText: 'I\'m open to internships in CFD and aerodynamics. Feel free to reach out.',
     footerNote: 'Hero animation: potential flow over a Joukowski airfoil.'
   },
 
@@ -517,9 +520,9 @@ const SITE = {
 
   // About section paragraphs, one string per paragraph.
   about: [
-    'Third-year Physics B.S. student at UC Santa Barbara and Aerodynamics Team Lead for Gaucho Racing FSAE.',
-    'My work covers the full aerodynamic workflow: CAD in SOLIDWORKS, unstructured meshing, steady and transient RANS in Ansys Fluent on HPC clusters, composite manufacturing, and testing on the car.',
-    'I have also completed two undergraduate research projects on FSAE underbody and diffuser aerodynamics, and I drive the car in competition.'
+    'I\'m a third-year physics student at UC Santa Barbara, originally from Rio Vista, CA, and I lead the aerodynamics team at Gaucho Racing FSAE.',
+    'I work across the whole aero workflow: CAD in SOLIDWORKS, unstructured meshing, steady and transient RANS in Ansys Fluent on HPC clusters, composite manufacturing, and testing on the car.',
+    'I\'ve also done two undergraduate research projects on FSAE underbody and diffuser aerodynamics, and I get to drive the car in competition.'
   ],
 
   // Photos. Set src to an image path (e.g. 'img/portrait.jpg'); empty slots show a dashed tile.
@@ -917,11 +920,14 @@ function fit(c) {
 /* ---------- Hero streamlines ---------- */
 const flow = (() => {
   const c = $('#flow'), P = flowParams(-6);
-  let g, w, h, cx, cy, s, parts = [], outline, raf = 0, visible = true, ink = '';
+  let g, w, h, inlet, cx, cy, s, parts = [], outline, raf = 0, visible = true, ink = '';
   const toScreen = (zx, zy) => [cx + (zx * P.ca + zy * P.sa) * s, cy - (-zx * P.sa + zy * P.ca) * s];
   function spawn(p, anywhere) {
     for (let k = 0; k < 8; k++) {
-      const sx = anywhere ? Math.random() * w : -10, sy = Math.random() * h;
+      // lines are only released above the bottom of the hero, thinning out toward it;
+      // below that they just carry on downstream and fade
+      const sx = anywhere ? Math.random() * w : -10, sy = Math.random() * inlet, thin = (sy / inlet - .6) / .4;
+      if (thin > 0 && Math.random() < thin) continue;
       const xr = (sx - cx) / s, yr = (cy - sy) / s;
       inverse(xr * P.ca - yr * P.sa, xr * P.sa + yr * P.ca);
       if (Z.r > RAD * 1.04) { p.x = Z.x; p.y = Z.y; p.sx = sx; p.sy = sy; p.life = 160 + Math.random() * 420; return; }
@@ -958,10 +964,10 @@ const flow = (() => {
   function reset() {
     const f = fit(c); if (!f) return; ({ g, w, h } = f); ink = css('--ink');
     const narrow = w < 860;
-    s = (narrow ? w * .78 : w * .34) / 4; cx = narrow ? w * .54 : w * .71; cy = narrow ? h - 330 : h * .4;
-    if (narrow && h < 700) cy = h * .62;
+    inlet = Math.max(200, h - (parseFloat(getComputedStyle(c).getPropertyValue('--ext')) || 0));   // hero height
+    s = (narrow ? w * .78 : w * .34) / 4; cx = narrow ? w * .54 : w * .71; cy = narrow ? inlet - 95 : inlet * .4;
     outline = airfoil(140).map(q => toScreen(q[0], q[1]));
-    parts = Array.from({ length: Math.min(720, Math.round(w * h / 2300)) }, () => { const p = {}; spawn(p, true); return p; });
+    parts = Array.from({ length: Math.min(720, Math.round(w * inlet / 2300)) }, () => { const p = {}; spawn(p, true); return p; });
     cancelAnimationFrame(raf); raf = 0;
     if (reduced) { for (let i = 0; i < 240; i++) step(.1); body(); } else raf = requestAnimationFrame(frame);
   }
