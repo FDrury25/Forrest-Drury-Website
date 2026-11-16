@@ -367,7 +367,7 @@ dialog[open] { animation: pop .45s var(--ease); }
       <div class="hero-copy">
         <p class="eyebrow fade-up" style="--d:.05s">Aerodynamics · CFD · Composites</p>
         <h1><span><i>Forrest</i></span><span><i>Drury</i></span></h1>
-        <p class="lede fade-up" style="--d:.35s">I lead aerodynamics for <strong>Gaucho Racing</strong>, UC Santa Barbara's Formula SAE electric team. I design wings, diffusers and bodywork in SOLIDWORKS and Ansys Fluent, help build them in carbon fiber, and drive the car they end up on.</p>
+        <p class="lede fade-up" style="--d:.35s">Aerodynamics Team Lead for <strong>Gaucho Racing FSAE</strong> at UC Santa Barbara. I design and simulate wings, diffusers and bodywork in SOLIDWORKS and Ansys Fluent, and manufacture them in carbon fiber.</p>
         <div class="cta-row fade-up" style="--d:.5s">
           <a class="btn primary" href="#projects">See the projects <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7h12M8 2l5 5-5 5"/></svg></a>
           <a class="btn" href="#contact">Get in touch</a>
@@ -384,12 +384,12 @@ dialog[open] { animation: pop .45s var(--ease); }
   <!-- ============ ABOUT ============ -->
   <section id="about">
     <div class="wrap">
-      <div class="sec-head"><p class="eyebrow">About</p><h2>Physics student who spends most of the week on a race car.</h2></div>
+      <div class="sec-head"><p class="eyebrow">About</p><h2>Background</h2></div>
       <div class="about-grid">
         <div class="about-text">
-          <p>I'm a third-year physics major at UC Santa Barbara. I joined Gaucho Racing as an aerodynamics engineer in my first quarter and took over the aero team a year later.</p>
-          <p>That year we built the first aerodynamic package the program has run at competition. I'm now leading the second one. The job covers the whole loop: concept, CAD, RANS in Fluent, design reviews, molds, layups, and track testing.</p>
-          <p>I like the part of the work where simulation meets the shop. A geometry has to hold up in CFD, come out of a mold cleanly, and survive a season of cones. I also drive the car, which keeps my assumptions about balance and drag tied to what it's like at the wheel.</p>
+          <p>Third-year Physics B.S. student at UC Santa Barbara and Aerodynamics Team Lead for Gaucho Racing FSAE.</p>
+          <p>My work covers the full aerodynamic workflow: CAD in SOLIDWORKS, unstructured meshing, steady and transient RANS in Ansys Fluent on HPC clusters, composite manufacturing, and testing on the car.</p>
+          <p>I have also completed two undergraduate research projects on FSAE underbody and diffuser aerodynamics, and I drive the car in competition.</p>
         </div>
         <ul class="facts glass" id="facts"></ul>
       </div>
@@ -408,7 +408,7 @@ dialog[open] { animation: pop .45s var(--ease); }
   <!-- ============ PROJECTS ============ -->
   <section id="projects">
     <div class="wrap">
-      <div class="sec-head"><p class="eyebrow">Featured projects</p><h2>Two aero packages and the machine that cuts their cores.</h2><p>Open a card for scope, methods and manufacturing notes.</p></div>
+      <div class="sec-head"><p class="eyebrow">Featured projects</p><h2>Aerodynamic packages and tooling</h2><p>Select a card for details.</p></div>
       <div class="grid" id="projectGrid"></div>
     </div>
   </section>
@@ -424,7 +424,7 @@ dialog[open] { animation: pop .45s var(--ease); }
   <!-- ============ SKILLS ============ -->
   <section id="skills">
     <div class="wrap">
-      <div class="sec-head"><p class="eyebrow">Technical skills</p><h2>Tools and methods I use week to week.</h2></div>
+      <div class="sec-head"><p class="eyebrow">Technical skills</p><h2>Software and methods</h2></div>
       <div class="skills" id="skillGrid"></div>
     </div>
   </section>
@@ -435,14 +435,14 @@ dialog[open] { animation: pop .45s var(--ease); }
       <div class="contact glass">
         <div>
           <p class="eyebrow">Contact</p>
-          <h2 style="margin-top:14px">Looking for CFD and aerodynamics internships.</h2>
-          <p>Aerospace, automotive or motorsport. Happy to walk through any of the work here in more detail, including the parts that didn't work the first time.</p>
+          <h2 style="margin-top:14px">Get in touch</h2>
+          <p>Open to internships in CFD and aerodynamics.</p>
         </div>
         <ul class="contact-list" id="contactList"></ul>
       </div>
       <footer class="mono">
         <span>© <span id="year"></span> Forrest Drury · Rio Vista &amp; Santa Barbara, CA</span>
-        <span>Hero animation: analytic potential flow with the Kutta condition. The real CFD is in the projects.</span>
+        <span>Hero animation: potential flow over a Joukowski airfoil.</span>
       </footer>
     </div>
   </section>
@@ -466,40 +466,40 @@ dialog[open] { animation: pop .45s var(--ease); }
    ===================================================================== */
 const SITE = {
   readout: [
-    { value: '30', unit: '/ 100', label: 'Competition finish, the best score in program history' },
-    { value: '80', unit: '%', label: 'of vehicle mass in downforce at 77 mph, GR26' },
-    { value: '110', unit: '%', label: 'downforce target for GR27 at the same speed' },
-    { value: '20', unit: 'engineers', label: 'on the aerodynamics team I lead' }
+    { value: '30', unit: '/ 100', label: 'Placed 30th of 100 teams at competition' },
+    { value: '80', unit: '%', label: 'GR26 downforce, as a share of vehicle mass at 77 mph' },
+    { value: '110', unit: '%', label: 'GR27 downforce target at 77 mph' },
+    { value: '20', unit: 'engineers', label: 'on the aerodynamics team' }
   ],
 
   facts: [
-    ['Now', 'Aerodynamics Team Lead and driver, Gaucho Racing FSAE'],
-    ['Study', 'B.S. Physics, UC Santa Barbara. Graduating June 2028'],
-    ['Research', 'Two funded CFD studies on underbody and diffuser aerodynamics'],
-    ['Based', 'Santa Barbara, CA. From Rio Vista, CA. U.S. citizen'],
-    ['Also', 'Eagle Scout. Former City of Rio Vista Planning Commissioner']
+    ['Role', 'Aerodynamics Team Lead and Racing Driver, Gaucho Racing FSAE'],
+    ['Education', 'B.S. Physics, UC Santa Barbara. Expected June 2028'],
+    ['Research', 'FSAE underbody and side diffuser aerodynamics, UCSB'],
+    ['Location', 'Santa Barbara, CA and Rio Vista, CA. U.S. citizen'],
+    ['Honors', 'Eagle Scout. City of Rio Vista Planning Commissioner, 2023–24']
   ],
 
   experience: [
     {
       role: 'Aerodynamics Team Lead', dates: 'Jun 2025 – Present', current: true,
       points: [
-        'Led design, manufacturing, testing and validation of the first operational aerodynamic package in Gaucho Racing history, in my first year as lead.',
-        'Run a 20-engineer team through the full lifecycle of the package and defend the design in reviews with industry judges. The car placed 30th of 100 teams, our highest score to date, on the program\'s fourth competition vehicle.',
-        'Wrote and teach the fluid dynamics and CFD onboarding curriculum that new members use to learn the theory, methods and practice of vehicle aerodynamics.'
+        'Oversaw the design, manufacturing, testing and validation of the first operational aerodynamic package in Gaucho Racing\'s history.',
+        'Directed a 20-engineer team through the full lifecycle of the package and defended designs in reviews with industry judges. Placed 30th of 100 teams, the program\'s highest score, with its 4th competition vehicle.',
+        'Developed and taught a fluid dynamics and CFD onboarding curriculum covering the theory, methods and applications of vehicle aerodynamics.'
       ]
     },
     {
       role: 'Racing Driver', dates: 'Jun 2025 – Present', current: true,
       points: [
-        'Drive the electric race car in competition, managing pace, thermal limits and power use over a stint.',
-        'Bring vehicle dynamics feedback from the seat back to the engineering subteams.'
+        'Piloted the electric race vehicle in competition, managing pace, thermal limits and power.',
+        'Communicated vehicle dynamics and engineering feedback to the team.'
       ]
     },
     {
       role: 'Aerodynamics Engineer', dates: 'Sep 2024 – May 2025',
       points: [
-        'Designed front wing geometries in SOLIDWORKS and Ansys Fluent, trading downforce against drag.',
+        'Engineered front wing geometries in SOLIDWORKS and Ansys Fluent to balance downforce and drag.',
         'Manufactured composite wings, bodywork, diffusers and nosecone assemblies.'
       ]
     }
@@ -511,10 +511,10 @@ const SITE = {
       title: 'GR27 Aerodynamic Package',
       status: 'In development', live: true, dates: 'Jun 2026 – Present',
       scope: 'Front wing, rear wing, side diffusers, nosecone, bodywork',
-      summary: 'Second-generation package for the 2027 car. The target is downforce equal to 110% of vehicle mass at 77 mph, up from 80% on GR26.',
+      summary: 'Aerodynamic package for the 2027 Gaucho Racing vehicle, expected to increase downforce to 110% of vehicle mass at 77 mph.',
       metrics: [
-        { value: '−7%', label: 'lap time in OptimumLap' },
-        { value: '+35%', label: 'peak lateral acceleration' },
+        { value: '−7%', label: 'lap time (OptimumLap)' },
+        { value: '+35%', label: 'max lateral acceleration' },
         { value: '~2 min', label: 'saved over endurance' }
       ],
       tags: ['Ansys Fluent', 'SST k-ω', 'OptimumLap', 'SOLIDWORKS'],
@@ -525,22 +525,22 @@ const SITE = {
       ],
       detail: {
         overview: [
-          'I am designing the GR27 package and overseeing its development across the aero team. GR26 proved the team could build and run a full package. GR27 is about getting more load out of the same rules box and being more deliberate about where it acts on the car.',
-          'Lap simulation in OptimumLap puts the added downforce at a 7% lap time reduction and a 35% increase in peak lateral acceleration. Over endurance that is roughly two minutes, and potentially up to ten places in overall scoring.'
+          'Currently designing and overseeing development of the 2027 aerodynamic package.',
+          'In OptimumLap simulations, the added downforce corresponds to a 7% decrease in lap time and a 35% increase in maximum lateral acceleration. This saves roughly 2 minutes over endurance and indicates a potential improvement of up to 10 places in overall scoring.'
         ],
         specs: [
-          ['Role', 'Lead designer'], ['Status', 'In development'], ['Target', '110% vehicle mass at 77 mph'],
-          ['Solver', 'Ansys Fluent, RANS'], ['Turbulence', 'SST k-ω'], ['Lap sim', 'OptimumLap']
+          ['Role', 'Aerodynamics Team Lead'], ['Status', 'In development'], ['Target', '110% of vehicle mass at 77 mph'],
+          ['Solver', 'Ansys Fluent, RANS'], ['Turbulence model', 'SST k-ω'], ['Lap simulation', 'OptimumLap']
         ],
         sections: [
-          { heading: 'CFD approach', items: [
-            'Placeholder: mesh strategy, cell counts, y⁺ targets and domain size for the full-car model.',
-            'Placeholder: how batch runs are scripted through journals and submitted to the HPC cluster.',
-            'Placeholder: validation plan against GR26 track data.'
+          { heading: 'CFD methods', items: [
+            'Steady and transient RANS in Ansys Fluent with the SST k-ω turbulence model.',
+            'Unstructured poly-hexcore meshing with boundary layers sized by y⁺.',
+            'Batch simulations run on Linux HPC clusters through Python scripts, journals and the Fluent TUI.',
+            'Placeholder: cell counts, y⁺ target and domain size.'
           ] },
           { heading: 'Manufacturing', items: [
-            'Placeholder: mold approach, core materials and layup schedule for the wing elements.',
-            'Placeholder: what changed from GR26 after a season of running the parts.'
+            'Placeholder: molds, core materials and layup schedule.'
           ] }
         ]
       }
@@ -548,9 +548,9 @@ const SITE = {
     {
       id: 'gr26',
       title: 'GR26 Aerodynamic Package',
-      status: 'Raced', dates: 'Jun 2025 – Jun 2026',
+      status: 'Competed', dates: 'Jun 2025 – Jun 2026',
       scope: 'Front wing, rear wing, side diffusers, side pods, nosecone, bodywork',
-      summary: 'The first aero package Gaucho Racing has run at competition. It added normal force equal to 80% of vehicle mass at 77 mph.',
+      summary: 'Aerodynamic package for the 2026 competition vehicle. Increased vehicle normal force by 80% of vehicle mass at 77 mph.',
       metrics: [
         { value: '80%', label: 'of vehicle mass at 77 mph' },
         { value: '30th', label: 'of 100 teams' }
@@ -563,25 +563,23 @@ const SITE = {
       ],
       detail: {
         overview: [
-          'I designed and managed the aerodynamic package for the 2026 competition car. Before this the team had never taken a working aero package to an event, so a lot of the year went into building the process as well as the parts: review gates, a simulation workflow people could repeat, and manufacturing methods the shop could support.',
-          'The car finished 30th of 100 teams, the highest score in the program\'s history.'
+          'Designed and managed the aerodynamic package for the 2026 Gaucho Racing competition vehicle. It was the first operational aerodynamic package in the team\'s history.'
         ],
         specs: [
-          ['Role', 'Lead designer and manager'], ['Status', 'Competed 2026'], ['Result', '+80% vehicle mass at 77 mph'],
-          ['Solver', 'Ansys Fluent, RANS'], ['Mesh', 'Unstructured, poly-hexcore'], ['Team', '20 engineers']
+          ['Role', 'Aerodynamics Team Lead'], ['Status', 'Competed 2026'], ['Downforce', '80% of vehicle mass at 77 mph'],
+          ['Solver', 'Ansys Fluent, RANS'], ['Mesh', 'Unstructured, poly-hexcore'], ['Result', '30th of 100 teams']
         ],
         sections: [
-          { heading: 'Design and simulation', items: [
-            'Placeholder: element count and section choices for the front and rear wings.',
-            'Placeholder: how the side diffusers and side pods were packaged around cooling and suspension.',
-            'Placeholder: aero balance and how it moved with ride height.'
+          { heading: 'CFD methods', items: [
+            'Steady and transient RANS in Ansys Fluent with the SST k-ω turbulence model.',
+            'Unstructured poly-hexcore meshing with boundary layers sized by y⁺.',
+            'Batch simulations run on Linux HPC clusters through Python scripts, journals and the Fluent TUI.',
+            'Placeholder: cell counts, y⁺ target and domain size.'
           ] },
           { heading: 'Manufacturing', items: [
-            'Wings built around hotwire-cut foam cores with carbon fiber skins.',
-            'Placeholder: bodywork and nosecone tooling, cure process, final weights.'
-          ] },
-          { heading: 'What I would change', items: [
-            'Placeholder: the honest list. Judges and engineers both read this part.'
+            'Wings, bodywork, diffusers and nosecone manufactured in carbon fiber.',
+            'Structural airfoil cores cut on the CNC hotwire cutter.',
+            'Placeholder: tooling, cure process and final weights.'
           ] }
         ]
       }
@@ -589,11 +587,11 @@ const SITE = {
     {
       id: 'hotwire',
       title: 'CNC Hotwire Cutter',
-      status: 'In service', dates: 'Jul 2025 – Present',
-      scope: '4-axis, stepper driven, Arduino controlled',
-      summary: 'A four-axis hotwire cutter I built to cut structural airfoil cores for carbon layups. It replaced hand-cut templates.',
+      status: 'In use', dates: 'Jul 2025 – Present',
+      scope: '4-axis, stepper motors, Arduino',
+      summary: 'Custom 4-axis CNC hotwire cutter driven by stepper motors and an Arduino. Cuts structural airfoil cores for carbon fiber composite layups.',
       metrics: [
-        { value: '4', label: 'independent axes for tapered sections' }
+        { value: '4-axis', label: 'stepper motor drive' }
       ],
       tags: ['Arduino', 'Stepper motors', 'Foam cores'],
       media: [
@@ -602,16 +600,15 @@ const SITE = {
       ],
       detail: {
         overview: [
-          'Every wing element on the car starts as a foam core. I built this machine so the cores match the CAD section along the full span, including tapered and twisted elements, and I keep it running for the team.'
+          'Built and maintain a custom CNC hotwire cutter for precisely cutting structural airfoil cores used in carbon fiber composite layups.'
         ],
         specs: [
-          ['Role', 'Designer and builder'], ['Axes', '4, two per tower'], ['Drive', 'Stepper motors'], ['Control', 'Arduino']
+          ['Role', 'Built and maintained'], ['Axes', '4'], ['Drive', 'Stepper motors'], ['Control', 'Arduino']
         ],
         sections: [
           { heading: 'Build notes', items: [
-            'Placeholder: frame, motion hardware, wire tension and power supply.',
-            'Placeholder: toolpath generation from airfoil coordinates and kerf compensation.',
-            'Placeholder: measured accuracy against the CAD profile.'
+            'Placeholder: frame, motion hardware and wire setup.',
+            'Placeholder: toolpath generation from airfoil coordinates.'
           ] }
         ]
       }
@@ -622,13 +619,13 @@ const SITE = {
     {
       title: 'Analysis of an Aerodynamic Underbody for a Formula-Style Electric Vehicle',
       dates: 'Oct 2025 – May 2026', advisor: 'Prof. Tengiz Bibilashvili, UCSB',
-      summary: 'Studied a full-body undertray for the 2026 car. Iterated designs against CFD models, worked through what could realistically be manufactured, and presented the final findings. I wrote the proposal and secured the grant funding.',
+      summary: 'Researched applications of a full-body aerodynamic undertray for the 2026 FSAE vehicle. Investigated manufacturing barriers and iterated designs against CFD models to validate viability. Authored the research proposal, secured funding through university grants, and presented the final findings.',
       link: null   // e.g. 'papers/underbody.pdf'
     },
     {
-      title: 'Optimization of Side-Mounted Diffusers for a Formula-Style Electric Vehicle',
+      title: 'Optimization of Side Mounted Diffusers for a Formula-Style Electric Vehicle',
       dates: 'Oct 2024 – May 2025', advisor: 'Prof. Frederic Gibou, UCSB',
-      summary: 'Ran CFD in Ansys Fluent to map how flow from the front wing and nosecone arrives at the side diffusers, then used that to change the diffuser geometry for more downforce.',
+      summary: 'Ran CFD simulations in Ansys Fluent to map airflow around the front wing and nosecone into the diffusers, driving design changes to increase downforce.',
       link: null
     }
   ],
