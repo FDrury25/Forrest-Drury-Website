@@ -9,7 +9,10 @@ All content below the hero lives in the `SITE` object near the top of the `<scri
 | Array | What it drives |
 | --- | --- |
 | `readout` | The four numbers under the hero |
-| `portraits` | Photo row at the top of About (set `src` to an image path) |
+| `text` | Headings, hero intro, button and contact text |
+| `about` | About paragraphs |
+| `resume` | Résumé PDF the download buttons open |
+| `portraits` | About slideshow (set `src` to an image path) |
 | `gallery` | Photo strip near the bottom |
 | `facts` | The quick-facts panel in About |
 | `experience` | Timeline roles |
