@@ -409,7 +409,7 @@ dialog[open] { animation: pop .45s var(--ease); }
       </div>
     </div>
     <div class="flow-note mono fade-up" style="--d:1s" aria-hidden="true">
-      <span>Potential flow · inverted Joukowski section · α = −6°</span>
+      <span>Joukowski airfoil (My Favorite!)· Potential flow · α = −6°</span>
       <span class="cbar">0.0 <b></b> 1.8 &nbsp;|V| / V∞</span>
     </div>
   </div>
@@ -502,18 +502,18 @@ const SITE = {
   // Short pieces of text around the page. <strong>…</strong> makes a phrase bold.
   text: {
     heroTag: 'Aerodynamics · CFD · Composites',
-    heroIntro: 'I lead the aerodynamics team at <strong>Gaucho Racing FSAE</strong>, UC Santa Barbara. I design and simulate wings, diffusers and bodywork in SOLIDWORKS and Ansys Fluent, then build them in carbon fiber.',
+    heroIntro: 'Hey! I\'m the aerodynamics design lead at UC Santa Barbara, <strong>Gaucho Racing FSAE</strong. I manage the design and simulation of wings, diffusers and bodywork in SOLIDWORKS and Ansys, then manufacture them in carbon fiber.',
     resumeButton: 'Resume (PDF)',
     aboutTitle: 'About me',
     experienceTitle: 'Gaucho Racing FSAE',
     projectsTitle: 'What I\'ve been building',
-    projectsHint: 'Select a card for the full write-up.',
+    projectsHint: 'Select a project for the full spiel.',
     researchTitle: 'My undergraduate research',
     skillsTitle: 'What I work with',
-    galleryTitle: 'At the track and in the shop',
+    galleryTitle: 'Some of my favorite photos',
     contactTitle: 'Get in touch',
-    contactText: 'I\'m open to internships in CFD and aerodynamics. Feel free to reach out.',
-    footerNote: 'Hero animation: potential flow over a Joukowski airfoil.'
+    contactText: 'I\'m open to internships & jobs in CFD, aerodynamics, or anything else. Feel free to reach out if you\'d like to learn more, I\'d love to talk to you about my work!.',
+    footerNote: 'Updated: November 2026'
   },
 
   resume: 'Forrest_Drury_Resume.pdf',   // file the resume buttons open
@@ -521,7 +521,7 @@ const SITE = {
   // About section paragraphs, one string per paragraph.
   about: [
     'I\'m a third-year physics student at UC Santa Barbara, originally from Rio Vista, CA, and I lead the aerodynamics team at Gaucho Racing FSAE.',
-    'I work across the whole aero workflow: CAD in SOLIDWORKS, unstructured meshing, steady and transient RANS in Ansys Fluent on HPC clusters, composite manufacturing, and testing on the car.',
+    'I manage the whole aerodynamics workflow: CAD in SOLIDWORKS, unstructured meshing, CFD in Ansys Fluent, composite manufacturing, and testing on the car.',
     'I\'ve also done two undergraduate research projects on FSAE underbody and diffuser aerodynamics, and I get to drive the car in competition.'
   ],
 
@@ -546,13 +546,13 @@ const SITE = {
     ['Role', 'Aerodynamics Team Lead and Racing Driver, Gaucho Racing FSAE'],
     ['Education', 'B.S. Physics, UC Santa Barbara. Expected June 2028'],
     ['Research', 'FSAE underbody and side diffuser aerodynamics, UCSB'],
-    ['Location', 'Santa Barbara, CA and Rio Vista, CA. U.S. citizen'],
-    ['Honors', 'Eagle Scout. City of Rio Vista Planning Commissioner, 2023–24']
+    ['Location', 'Santa Barbara, CA and Rio Vista, CA.'],
+    ['Honors', 'Eagle Scout. City of Rio Vista Youth Planning Commissioner, 2023–24']
   ],
 
   experience: [
     {
-      role: 'Aerodynamics Team Lead', dates: 'Jun 2025 – Present', current: true,
+      role: 'Aerodynamics Team Lead', dates: 'May 2025 – Present', current: true,
       points: [
         'Oversaw the design, manufacturing, testing and validation of the first operational aerodynamic package in Gaucho Racing\'s history.',
         'Directed a 20-engineer team through the full lifecycle of the package and defended designs in reviews with industry judges. Placed 30th of 100 teams, the program\'s highest score, with its 4th competition vehicle.',
@@ -562,8 +562,9 @@ const SITE = {
     {
       role: 'Racing Driver', dates: 'Jun 2025 – Present', current: true,
       points: [
-        'Piloted the electric race vehicle in competition, managing pace, thermal limits and power.',
-        'Communicated vehicle dynamics and engineering feedback to the team.'
+        'Drove our first eligible vehicle (GR26) at competition. managing pace, thermal limits and power. Set the team\'s fastest autocross & finished endurance in 20th out of 39 teams.',
+         'Completed the second stint endurance using 30% of avaliable SOC while keeping laptimes within 10% of the first stint. Finished with <2% charge left!', 
+        'Communicated vehicle dynamics and engineering feedback to the team, leading to direct suspension tuning and balance improvements.'
       ]
     },
     {
@@ -618,7 +619,7 @@ const SITE = {
     {
       id: 'gr26',
       title: 'GR26 Aerodynamic Package',
-      status: 'Competed', dates: 'Jun 2025 – Jun 2026',
+      status: 'Completed', dates: 'Jun 2025 – Jun 2026',
       scope: 'Front wing, rear wing, side diffusers, side pods, nosecone, bodywork',
       summary: 'Aerodynamic package for the 2026 competition vehicle. Increased vehicle normal force by 80% of vehicle mass at 77 mph.',
       metrics: [
@@ -657,7 +658,7 @@ const SITE = {
     {
       id: 'hotwire',
       title: 'CNC Hotwire Cutter',
-      status: 'In use', dates: 'Jul 2025 – Present',
+      status: 'Completed', dates: 'Jul 2025 – Present',
       scope: '4-axis, stepper motors, Arduino',
       summary: 'Custom 4-axis CNC hotwire cutter driven by stepper motors and an Arduino. Cuts structural airfoil cores for carbon fiber composite layups.',
       metrics: [
