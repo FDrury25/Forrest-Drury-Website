@@ -9,7 +9,8 @@ All content below the hero lives in the `SITE` object near the top of the `<scri
 | Array | What it drives |
 | --- | --- |
 | `readout` | The four numbers under the hero |
-| `photos` | Photo tiles (set `src` to an image path) |
+| `portraits` | Photo row at the top of About (set `src` to an image path) |
+| `gallery` | Photo strip near the bottom |
 | `facts` | The quick-facts panel in About |
 | `experience` | Timeline roles |
 | `projects` | Project cards and their detail dialogs |
@@ -19,7 +20,7 @@ All content below the hero lives in the `SITE` object near the top of the `<scri
 
 ### Adding a project
 
-Append an object to `SITE.projects`. `layout` is `'wide'`, `'third'`, or omitted for half width. Each item in `media` is either a real image or a generated placeholder:
+Append an object to `SITE.projects`. Cards share a row and expand on hover. Each item in `media` is either a real image or a generated placeholder:
 
 ```js
 { src: 'img/gr27-cp.png', caption: 'Cp, front wing midspan' }   // real image

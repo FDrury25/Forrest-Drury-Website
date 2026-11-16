@@ -204,48 +204,63 @@ dl { margin: 0; }
 .role li, .d-list li { position: relative; padding-left: 18px; }
 .role li::before, .d-list li::before { content: ""; position: absolute; left: 0; top: .72em; width: 8px; height: 1px; background: var(--accent); }
 
-/* ---------- Photos ---------- */
-.photos { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: clamp(120px, 15vw, 170px); grid-auto-flow: dense; gap: 12px; }
-.photo { position: relative; overflow: hidden; border-radius: 14px; min-width: 0; }
-.photo.tall { grid-row: span 2; }
-.photo.wide { grid-column: span 2; }
+/* ---------- Photos: portraits (About) and gallery strip ---------- */
+.photo { position: relative; overflow: hidden; border-radius: 14px; min-width: 0; margin: 0; }
 .photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .9s var(--ease); }
-.photo:hover img { transform: scale(1.05); }
-.photo figcaption { position: absolute; left: 10px; bottom: 9px; right: 10px; width: fit-content; max-width: calc(100% - 20px); padding: 3px 8px; border-radius: 6px; background: var(--glass-strong); font: 400 .66rem var(--f-mono); letter-spacing: .04em; color: var(--ink-2); }
+.photo.has-img { cursor: zoom-in; }
+.photo.has-img:hover img { transform: scale(1.05); }
+.photo figcaption { position: absolute; left: 10px; bottom: 9px; width: fit-content; max-width: calc(100% - 20px); padding: 3px 8px; border-radius: 6px; background: var(--glass-strong); font: 400 .66rem var(--f-mono); letter-spacing: .04em; color: var(--ink-2); }
 .photo.empty { border: 1px dashed var(--line); background: var(--glass); display: grid; place-items: center; }
 .photo.empty svg { width: 22px; height: 22px; stroke: var(--ink-3); opacity: .7; }
+.portraits { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: clamp(20px, 3vw, 30px); }
+.portraits .photo { aspect-ratio: 4 / 5; max-width: 100%; }
+.strip { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x proximity; padding-bottom: 12px; scrollbar-width: thin; -webkit-mask-image: linear-gradient(90deg, #000 88%, transparent); mask-image: linear-gradient(90deg, #000 88%, transparent); }
+.strip .photo { flex: none; scroll-snap-align: start; height: clamp(170px, 20vw, 230px); width: clamp(230px, 27vw, 320px); }
+.strip .photo.wide { width: clamp(290px, 38vw, 450px); }
+.strip::after { content: ""; flex: none; width: 8%; }
+.lightbox { margin: 0; display: flex; flex-direction: column; gap: 10px; align-items: center; }
+.lightbox img { max-width: 100%; max-height: 68vh; border-radius: 12px; display: block; }
 
-/* ---------- Project cards ---------- */
-.grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; }
-.card { position: relative; grid-column: span 3; display: flex; flex-direction: column; overflow: hidden; text-align: left; padding: 0; cursor: pointer; width: 100%; transition: transform .45s var(--ease), border-color .3s; }
-.card.wide { grid-column: span 6; flex-direction: row; }
-.card.third { grid-column: span 2; }
-.card::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .4s; background: radial-gradient(280px circle at var(--mx, 50%) var(--my, 50%), var(--accent-soft), transparent 70%); }
-.card:hover { transform: translateY(-4px); border-color: var(--accent); }
-.card:hover::after { opacity: 1; }
-.media { position: relative; aspect-ratio: 16 / 9; max-width: 100%; overflow: hidden; background: var(--body-fill); border-bottom: 1px solid var(--line); flex: none; }
-.card.wide .media { width: 54%; aspect-ratio: auto; min-height: 230px; border-bottom: 0; border-right: 1px solid var(--line); }
-.media canvas, .media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .9s var(--ease); }
-.card:hover .media canvas, .card:hover .media img { transform: scale(1.04); }
+/* ---------- Project cards ----------
+   Small cards in a row. On hover (or keyboard focus) a card grows to take the row and
+   the others give way. On touch and narrow screens they stack with everything shown. */
+.grid { display: flex; flex-direction: column; gap: 14px; }
+.card { position: relative; display: flex; flex-direction: column; overflow: hidden; text-align: left; cursor: pointer; min-width: 0; transition: flex-grow .65s var(--ease), border-color .3s; }
+.card:hover, .card:focus-visible { border-color: var(--accent); }
+.media { position: relative; aspect-ratio: 16 / 9; max-width: 100%; overflow: hidden; background: var(--body-fill); flex: none; margin: 0; }
+.media canvas, .media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 .media figcaption { position: absolute; left: 12px; bottom: 10px; padding: 3px 8px; border-radius: 6px; background: var(--glass-strong); font: 400 .66rem var(--f-mono); letter-spacing: .04em; color: var(--ink-2); }
-.card-body { display: flex; flex-direction: column; gap: 10px; padding: 18px 22px 20px; min-width: 0; flex: 1; }
-.card-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 12px; align-items: center; }
+.card > .media { border-bottom: 1px solid var(--line); }
+.panel { display: flex; flex-direction: column; gap: 8px; padding: 16px 18px 18px; min-width: 0; }
 .status { display: inline-flex; align-items: center; gap: 7px; font: 500 .7rem var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
-.status::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--ink-3); }
+.status::before { content: ""; flex: none; width: 6px; height: 6px; border-radius: 50%; background: var(--ink-3); }
 .status.live { color: var(--accent); }
 .status.live::before { background: var(--accent); animation: pulse 2.4s ease-out infinite; }
 @keyframes pulse { 0% { box-shadow: 0 0 0 0 var(--accent); } 70%, 100% { box-shadow: 0 0 0 7px transparent; } }
-.card h3 { font: 700 clamp(1.2rem, 2vw, 1.5rem)/1.2 var(--f-display); font-stretch: 110%; letter-spacing: -.01em; text-wrap: balance; }
-.card p { color: var(--ink-2); font-size: .96rem; }
-.metrics { display: flex; flex-wrap: wrap; gap: 10px 26px; padding-top: 4px; }
+.card h3 { font: 700 1.12rem/1.2 var(--f-display); font-stretch: 110%; letter-spacing: -.01em; }
+.extra { display: grid; grid-template-rows: 1fr; overflow: hidden; }
+.extra-in { display: flex; flex-direction: column; gap: 10px; min-height: 0; overflow: hidden; }
+.extra-in p { color: var(--ink-2); font-size: .92rem; line-height: 1.5; }
+.metrics { display: flex; flex-wrap: wrap; gap: 8px 22px; }
 .metrics div { display: flex; flex-direction: column; gap: 2px; }
-.metrics b { font: 700 1.35rem/1.1 var(--f-display); font-stretch: 110%; font-variant-numeric: tabular-nums; }
-.metrics span { font-size: .78rem; color: var(--ink-3); max-width: 11rem; line-height: 1.35; }
-.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 6px; }
+.metrics b { font: 700 1.15rem/1.1 var(--f-display); font-stretch: 110%; font-variant-numeric: tabular-nums; }
+.metrics span { font-size: .74rem; color: var(--ink-3); max-width: 10rem; line-height: 1.35; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
 .tag { padding: 3px 9px; border-radius: 999px; border: 1px solid var(--line); font: 400 .7rem var(--f-mono); color: var(--ink-2); }
-.more { display: inline-flex; align-items: center; gap: 8px; font-size: .86rem; font-weight: 500; color: var(--accent); }
-.more svg { width: 13px; height: 13px; transition: transform .3s var(--ease); }
-.card:hover .more svg { transform: translateX(4px); }
+.more { display: inline-flex; align-items: center; gap: 8px; font-size: .84rem; font-weight: 500; color: var(--accent); }
+.more svg { width: 13px; height: 13px; }
+@media (hover: hover) and (min-width: 861px) {
+  .grid { flex-direction: row; flex-wrap: wrap; }
+  .card { flex: 1 1 0; min-width: 190px; height: 370px; }
+  .card:hover, .card:focus-visible { flex-grow: 6; }
+  /* media keeps a fixed size and the card crops it, so figures never stretch mid-transition */
+  .card > .media { position: absolute; top: 0; bottom: 0; left: 50%; width: max(780px, 100%); max-width: none; aspect-ratio: auto; transform: translateX(-50%); border-bottom: 0; }
+  .card > .media figcaption { display: none; }
+  .panel { position: absolute; left: 12px; right: 12px; bottom: 12px; max-width: 430px; padding: 13px 16px 14px; border-radius: 12px; background: var(--glass-strong); border: 1px solid var(--glass-line); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
+  .extra { grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows .6s var(--ease), opacity .3s; }
+  .extra-in { min-width: 396px; }
+  .card:hover .extra, .card:focus-visible .extra { grid-template-rows: 1fr; opacity: 1; transition-delay: .1s, .22s; }
+}
 
 /* ---------- Research + skills (side by side) ---------- */
 .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 0 clamp(24px, 4vw, 48px); align-items: start; }
@@ -306,11 +321,9 @@ dialog[open] { animation: pop .45s var(--ease); }
 /* ---------- Responsive ---------- */
 @media (max-width: 860px) {
   .about-grid, .contact { grid-template-columns: 1fr; }
-  .card, .card.third { grid-column: span 6; }
-  .card.wide { flex-direction: column; }
-  .card.wide .media { width: 100%; aspect-ratio: 16 / 9; min-height: 0; border-right: 0; border-bottom: 1px solid var(--line); }
   .roles, .duo { grid-template-columns: 1fr; }
-  .photos { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 130px; }
+  .portraits { display: flex; overflow-x: auto; scroll-snap-type: x proximity; padding-bottom: 8px; scrollbar-width: thin; }
+  .portraits .photo { flex: none; width: 44%; scroll-snap-align: start; }
   .readout { grid-template-columns: repeat(2, 1fr); }
   .readout div:nth-child(3) { border-left: 0; }
   .readout div:nth-child(n+3) { border-top: 1px solid var(--line); }
@@ -344,11 +357,11 @@ dialog[open] { animation: pop .45s var(--ease); }
     <a class="brand" href="#top" aria-label="Forrest Drury, back to top">FD</a>
     <div class="nav-links">
       <a href="#about">About</a>
-      <a href="#photos">Photos</a>
       <a href="#experience">Experience</a>
       <a href="#projects">Projects</a>
       <a href="#research">Research</a>
       <a href="#skills">Skills</a>
+      <a href="#photos">Gallery</a>
       <a href="#contact">Contact</a>
     </div>
   </nav>
@@ -388,7 +401,8 @@ dialog[open] { animation: pop .45s var(--ease); }
   <!-- ============ ABOUT ============ -->
   <section id="about">
     <div class="wrap">
-      <div class="sec-head"><p class="eyebrow">About</p><h2>Background</h2></div>
+      <div class="sec-head"><p class="eyebrow">About</p><h2>About me</h2></div>
+      <div class="portraits" id="portraits"></div>
       <div class="about-grid">
         <div class="about-text">
           <p>Third-year Physics B.S. student at UC Santa Barbara and Aerodynamics Team Lead for Gaucho Racing FSAE.</p>
@@ -397,14 +411,6 @@ dialog[open] { animation: pop .45s var(--ease); }
         </div>
         <ul class="facts glass" id="facts"></ul>
       </div>
-    </div>
-  </section>
-
-  <!-- ============ PHOTOS ============ -->
-  <section id="photos">
-    <div class="wrap">
-      <div class="sec-head"><p class="eyebrow">Photos</p><h2>At the track and in the shop</h2></div>
-      <div class="photos" id="photoGrid"></div>
     </div>
   </section>
 
@@ -419,7 +425,7 @@ dialog[open] { animation: pop .45s var(--ease); }
   <!-- ============ PROJECTS ============ -->
   <section id="projects">
     <div class="wrap">
-      <div class="sec-head"><p class="eyebrow">Featured projects</p><h2>Aerodynamic packages and tooling</h2><p>Select a card for details.</p></div>
+      <div class="sec-head"><p class="eyebrow">Featured projects</p><h2>Aerodynamic packages and tooling</h2><p>Select a card for the full write-up.</p></div>
       <div class="grid" id="projectGrid"></div>
     </div>
   </section>
@@ -435,6 +441,14 @@ dialog[open] { animation: pop .45s var(--ease); }
       <div class="skills glass" id="skillGrid"></div>
     </section>
   </div>
+
+  <!-- ============ GALLERY ============ -->
+  <section id="photos">
+    <div class="wrap">
+      <div class="sec-head"><p class="eyebrow">Gallery</p><h2>At the track and in the shop</h2></div>
+      <div class="strip" id="photoStrip" tabindex="0" aria-label="Photo gallery, scroll sideways"></div>
+    </div>
+  </section>
 
   <!-- ============ CONTACT ============ -->
   <section id="contact">
@@ -469,7 +483,6 @@ dialog[open] { animation: pop .45s var(--ease); }
              render, layup photo). When present it replaces the drawing.
      - kind: 'contour' | 'mesh' | 'cad' | 'layup' picks the generated
              placeholder drawing used until a real image is supplied.
-   Project layout: 'wide' (full row), 'half' (default), 'third'.
    ===================================================================== */
 const SITE = {
   readout: [
@@ -479,14 +492,21 @@ const SITE = {
     { value: '20', unit: 'engineers', label: 'on the aerodynamics team' }
   ],
 
-  // Photos of you. Set src to an image path (e.g. 'img/portrait.jpg'); empty slots show a dashed tile.
-  // size: 'tall' (two rows), 'wide' (two columns) or omit for a single tile.
-  photos: [
-    { src: null, caption: 'Portrait', size: 'tall' },
-    { src: null, caption: 'Driving at competition', size: 'wide' },
+  // Photos. Set src to an image path (e.g. 'img/portrait.jpg'); empty slots show a dashed tile.
+  // portraits: the row at the top of About. gallery: the strip near the bottom (size: 'wide' optional).
+  portraits: [
+    { src: null, caption: 'Portrait' },
+    { src: null, caption: 'In the car' },
+    { src: null, caption: 'In the shop' },
+    { src: null, caption: 'Outside racing' }
+  ],
+  gallery: [
+    { src: null, caption: 'Car on track', size: 'wide' },
+    { src: null, caption: 'Competition' },
     { src: null, caption: 'Composite layup' },
-    { src: null, caption: 'With the team' },
-    { src: null, caption: 'Car on track', size: 'wide' }
+    { src: null, caption: 'Hotwire cutting', size: 'wide' },
+    { src: null, caption: 'Team' },
+    { src: null, caption: 'Testing day' }
   ],
 
   facts: [
@@ -524,7 +544,7 @@ const SITE = {
 
   projects: [
     {
-      id: 'gr27', layout: 'wide',
+      id: 'gr27',
       title: 'GR27 Aerodynamic Package',
       status: 'In development', live: true, dates: 'Jun 2026 – Present',
       scope: 'Front wing, rear wing, side diffusers, nosecone, bodywork',
@@ -677,27 +697,32 @@ const mediaHTML = (m, i) => `<figure class="media">${m.src
 
 $('#readout').innerHTML = SITE.readout.map(r => `<div><dt>${r.label}</dt><dd>${r.value}<small>${r.unit}</small></dd></div>`).join('');
 $('#facts').innerHTML = SITE.facts.map(f => `<li><span>${f[0]}</span><span>${f[1]}</span></li>`).join('');
-$('#photoGrid').innerHTML = SITE.photos.map(ph => `<figure class="photo ${ph.size || ''}${ph.src ? '' : ' empty'}">${ph.src
+const photoHTML = ph => `<figure class="photo ${ph.size || ''} ${ph.src ? 'has-img' : 'empty'}">${ph.src
   ? `<img src="${ph.src}" alt="${ph.caption || ''}" loading="lazy">`
   : '<svg viewBox="0 0 24 24" fill="none" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="12" cy="12.5" r="3.4"/><path d="M8.5 6l1.2-2h4.6l1.2 2"/></svg>'}
-  ${ph.caption ? `<figcaption>${ph.src ? '' : 'Add photo · '}${ph.caption}</figcaption>` : ''}</figure>`).join('');
+  ${ph.caption ? `<figcaption>${ph.src ? '' : 'Add photo · '}${ph.caption}</figcaption>` : ''}</figure>`;
+$('#portraits').innerHTML = SITE.portraits.map(photoHTML).join('');
+$('#photoStrip').innerHTML = SITE.gallery.map(photoHTML).join('');
 $('#timeline').innerHTML = SITE.experience.map(e => `
   <article class="role glass">
     <div class="role-meta"><h3>${e.role}</h3><span class="mono">${e.dates}</span></div>
     <ul>${e.points.map(p => `<li>${p}</li>`).join('')}</ul>
   </article>`).join('');
 $('#projectGrid').innerHTML = SITE.projects.map((p, i) => `
-  <button type="button" class="card glass ${p.layout || ''}" data-project="${p.id}" aria-haspopup="dialog">
+  <article class="card glass" data-project="${p.id}" role="button" tabindex="0" aria-haspopup="dialog">
     ${mediaHTML(p.media[0], i)}
-    <div class="card-body">
-      <div class="card-top"><span class="status${p.live ? ' live' : ''}">${p.status}</span><span class="mono">${p.dates}</span></div>
+    <div class="panel">
+      <span class="status${p.live ? ' live' : ''}">${p.status}</span>
       <h3>${p.title}</h3>
-      <p>${p.summary}</p>
-      <div class="metrics">${p.metrics.map(m => `<div><b>${m.value}</b><span>${m.label}</span></div>`).join('')}</div>
-      <div class="tags">${p.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
-      <span class="more">Details ${ARROW}</span>
+      <div class="extra"><div class="extra-in">
+        <span class="mono">${p.dates}</span>
+        <p>${p.summary}</p>
+        <div class="metrics">${p.metrics.map(m => `<div><b>${m.value}</b><span>${m.label}</span></div>`).join('')}</div>
+        <div class="tags">${p.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+        <span class="more">View details ${ARROW}</span>
+      </div></div>
     </div>
-  </button>`).join('');
+  </article>`).join('');
 $('#papers').innerHTML = SITE.research.map(r => `
   <article class="paper">
     <div class="paper-top"><span class="mono">${r.dates}</span>${r.link ? `<a class="paper-link" href="${r.link}">Read paper</a>` : `<span class="paper-link">Write-up coming</span>`}</div>
@@ -730,6 +755,8 @@ function openProject(id) {
 }
 document.addEventListener('click', e => {
   const card = e.target.closest('[data-project]'); if (card) return openProject(card.dataset.project);
+  const ph = e.target.closest('.photo.has-img');
+  if (ph) { const im = ph.querySelector('img'); sheet.innerHTML = `<div class="sheet-head"><span class="mono">${im.alt}</span><button type="button" class="x" aria-label="Close" data-close><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M1 1l10 10M11 1L1 11"/></svg></button></div><figure class="lightbox"><img src="${im.src}" alt="${im.alt}"></figure>`; return dlg.showModal(); }
   if (e.target.closest('[data-close]') || e.target === dlg) return dlg.close();
   const cp = e.target.closest('[data-copy]');
   if (cp) {
@@ -739,17 +766,15 @@ document.addEventListener('click', e => {
   }
 });
 
-/* ---------- Card spotlight follows the pointer ---------- */
-document.addEventListener('pointermove', e => {
-  const c = e.target.closest && e.target.closest('.card'); if (!c) return;
-  const r = c.getBoundingClientRect();
-  c.style.setProperty('--mx', (e.clientX - r.left) + 'px'); c.style.setProperty('--my', (e.clientY - r.top) + 'px');
-}, { passive: true });
+/* ---------- Keyboard: Enter / Space opens a focused project card ---------- */
+document.addEventListener('keydown', e => {
+  if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('[data-project]')) { e.preventDefault(); openProject(e.target.dataset.project); }
+});
 
 /* ---------- Scroll reveal + nav highlight ---------- */
 if ('IntersectionObserver' in window && !reduced) {
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
-  document.querySelectorAll('.sec-head, .about-text, .facts, .photo, .role, .card, .paper, .skills, .contact').forEach(el => {
+  document.querySelectorAll('.sec-head, .about-text, .facts, .strip, .role, .card, .paper, .skills, .contact').forEach(el => {
     if (el.getBoundingClientRect().top < innerHeight * .95) return;      // already on screen: leave visible
     const sibs = [...el.parentElement.children]; el.style.setProperty('--d', Math.min(sibs.indexOf(el), 4) * 70 + 'ms');
     el.classList.add('rv'); io.observe(el);
