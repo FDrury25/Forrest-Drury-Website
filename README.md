@@ -9,6 +9,7 @@ All content below the hero lives in the `SITE` object near the top of the `<scri
 | Array | What it drives |
 | --- | --- |
 | `readout` | The four numbers under the hero |
+| `photos` | Photo tiles (set `src` to an image path) |
 | `facts` | The quick-facts panel in About |
 | `experience` | Timeline roles |
 | `projects` | Project cards and their detail dialogs |
