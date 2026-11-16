@@ -1,0 +1,957 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Forrest Drury Portfolio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Forrest Drury. Aerodynamics lead at Gaucho Racing FSAE and physics student at UC Santa Barbara. CFD, aerodynamic design and composite manufacturing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<script>
+/* Apply a saved theme before first paint. No saved choice = follow the OS. */
+try { var t = localStorage.getItem('fd-theme'); if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+</script>
+<style>
+/* Layout: left-aligned single column (max 1120px) over a fixed mesh + colour field;
+   frosted panels only where content needs lifting off the background. */
+:root {
+  --bg: #ECEFF3;
+  --bg-2: #E2E7EE;
+  --ink: #101B2B;
+  --ink-2: #42516A;
+  --ink-3: #5A6980;
+  --line: rgba(16, 27, 43, .13);
+  --glass: rgba(255, 255, 255, .5);
+  --glass-strong: rgba(255, 255, 255, .78);
+  --glass-line: rgba(255, 255, 255, .8);
+  --shadow: 0 1px 0 rgba(255,255,255,.6) inset, 0 18px 40px -24px rgba(16, 27, 43, .35);
+  --accent: #2148C9;
+  --accent-ink: #FFFFFF;
+  --accent-soft: rgba(33, 72, 201, .1);
+  --accent-2: #D9541F;
+  --blob-1: rgba(70, 175, 225, .42);
+  --blob-2: rgba(255, 150, 105, .32);
+  --blob-3: rgba(125, 130, 255, .26);
+  --mesh-rgb: 16, 27, 43;
+  --mesh-a: .075;
+  /* velocity colour map, slow to fast */
+  --cm-0: #18A0B0; --cm-1: #2148C9; --cm-2: #B63C8E; --cm-3: #E8622C;
+  --body-fill: #F6F8FA;
+
+  --f-display: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --r: 18px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0E131A; --bg-2: #151C26;
+    --ink: #E7EDF4; --ink-2: #AEBACB; --ink-3: #8593A7;
+    --line: rgba(231, 237, 244, .13);
+    --glass: rgba(26, 34, 47, .52); --glass-strong: rgba(22, 29, 40, .82);
+    --glass-line: rgba(255, 255, 255, .09);
+    --shadow: 0 1px 0 rgba(255,255,255,.05) inset, 0 24px 50px -28px rgba(0, 0, 0, .8);
+    --accent: #FFB347; --accent-ink: #1B1204; --accent-soft: rgba(255, 179, 71, .12);
+    --accent-2: #5AD7E6;
+    --blob-1: rgba(38, 110, 210, .34); --blob-2: rgba(255, 150, 50, .15); --blob-3: rgba(0, 195, 185, .17);
+    --mesh-rgb: 190, 215, 240; --mesh-a: .06;
+    --cm-0: #2E6BE6; --cm-1: #45D3E3; --cm-2: #FFD166; --cm-3: #FF7A59;
+    --body-fill: #121821;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0E131A; --bg-2: #151C26;
+  --ink: #E7EDF4; --ink-2: #AEBACB; --ink-3: #8593A7;
+  --line: rgba(231, 237, 244, .13);
+  --glass: rgba(26, 34, 47, .52); --glass-strong: rgba(22, 29, 40, .82);
+  --glass-line: rgba(255, 255, 255, .09);
+  --shadow: 0 1px 0 rgba(255,255,255,.05) inset, 0 24px 50px -28px rgba(0, 0, 0, .8);
+  --accent: #FFB347; --accent-ink: #1B1204; --accent-soft: rgba(255, 179, 71, .12);
+  --accent-2: #5AD7E6;
+  --blob-1: rgba(38, 110, 210, .34); --blob-2: rgba(255, 150, 50, .15); --blob-3: rgba(0, 195, 185, .17);
+  --mesh-rgb: 190, 215, 240; --mesh-a: .06;
+  --cm-0: #2E6BE6; --cm-1: #45D3E3; --cm-2: #FFD166; --cm-3: #FF7A59;
+  --body-fill: #121821;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 88px; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 400 1rem/1.65 var(--f-body);
+  -webkit-font-smoothing: antialiased; overflow-x: hidden;
+}
+h1, h2, h3, h4, p, ul, figure { margin: 0; }
+ul { padding: 0; list-style: none; }
+a { color: inherit; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+::selection { background: var(--accent); color: var(--accent-ink); }
+
+/* Fallback theme fade where View Transitions are unavailable */
+.theming, .theming * { transition: background-color .5s ease, color .5s ease, border-color .5s ease, fill .5s ease, stroke .5s ease !important; }
+::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+
+/* ---------- Background: colour field + mesh ---------- */
+.backdrop { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; background: linear-gradient(180deg, var(--bg), var(--bg-2)); }
+.blob { position: absolute; border-radius: 50%; will-change: transform; }
+.blob.b1 { width: 62vmax; height: 62vmax; left: -18vmax; top: -22vmax; background: radial-gradient(closest-side, var(--blob-1), transparent); animation: drift1 46s ease-in-out infinite alternate; }
+.blob.b2 { width: 54vmax; height: 54vmax; right: -16vmax; top: 22vh; background: radial-gradient(closest-side, var(--blob-2), transparent); animation: drift2 58s ease-in-out infinite alternate; }
+.blob.b3 { width: 58vmax; height: 58vmax; left: 12vw; bottom: -30vmax; background: radial-gradient(closest-side, var(--blob-3), transparent); animation: drift3 52s ease-in-out infinite alternate; }
+@keyframes drift1 { to { transform: translate3d(14vw, 10vh, 0) scale(1.12); } }
+@keyframes drift2 { to { transform: translate3d(-16vw, -12vh, 0) scale(.9); } }
+@keyframes drift3 { to { transform: translate3d(10vw, -14vh, 0) scale(1.08); } }
+#mesh { position: absolute; inset: 0; width: 100%; height: 100%; -webkit-mask-image: radial-gradient(120% 90% at 50% 40%, rgba(0,0,0,.35), #000 75%); mask-image: radial-gradient(120% 90% at 50% 40%, rgba(0,0,0,.35), #000 75%); }
+
+/* ---------- Shared pieces ---------- */
+.wrap { max-width: 1120px; margin-inline: auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+.glass {
+  background: var(--glass); border: 1px solid var(--glass-line); border-radius: var(--r);
+  -webkit-backdrop-filter: blur(16px) saturate(150%); backdrop-filter: blur(16px) saturate(150%);
+  box-shadow: var(--shadow);
+}
+.mono { font-family: var(--f-mono); font-size: .75rem; letter-spacing: .04em; color: var(--ink-3); }
+.eyebrow { font-family: var(--f-mono); font-size: .75rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); display: flex; align-items: center; gap: 10px; }
+.eyebrow::before { content: ""; width: 22px; height: 1px; background: currentColor; }
+section { padding-block: clamp(56px, 9vw, 104px); }
+.sec-head { display: flex; flex-direction: column; gap: 12px; margin-bottom: clamp(28px, 4vw, 44px); max-width: 44rem; }
+.sec-head h2 { font: 700 clamp(1.7rem, 3.6vw, 2.5rem)/1.08 var(--f-display); font-stretch: 112%; letter-spacing: -.015em; text-wrap: balance; }
+.sec-head p { color: var(--ink-2); max-width: 38rem; }
+
+/* Scroll reveal: class is added by JS only to elements below the fold */
+.rv { opacity: 0; transform: translateY(18px); }
+.rv.in { opacity: 1; transform: none; transition: opacity .8s var(--ease), transform .8s var(--ease); transition-delay: var(--d, 0ms); }
+
+/* ---------- Nav ---------- */
+.nav { position: fixed; z-index: 30; top: calc(14px + env(safe-area-inset-top, 0px)); left: 0; right: 0; pointer-events: none; }
+.nav-inner { pointer-events: auto; display: flex; align-items: center; gap: 6px; width: fit-content; max-width: 100%; margin-inline: auto; padding: 6px 8px 6px 16px; border-radius: 999px; background: var(--glass-strong); }
+.brand { font: 800 .95rem/1 var(--f-display); font-stretch: 125%; letter-spacing: .02em; text-decoration: none; padding-right: 10px; border-right: 1px solid var(--line); flex: none; }
+.nav-links { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; min-width: 0; }
+.nav-links::-webkit-scrollbar { display: none; }
+.nav-links a { position: relative; flex: none; padding: 8px 12px; border-radius: 999px; text-decoration: none; font-size: .86rem; color: var(--ink-2); transition: color .25s, background-color .25s; }
+.nav-links a:hover { color: var(--ink); }
+.nav-links a.on { color: var(--ink); background: var(--accent-soft); }
+.nav-links a.on::after { content: ""; position: absolute; left: 50%; bottom: 3px; width: 4px; height: 4px; margin-left: -2px; border-radius: 50%; background: var(--accent); }
+
+/* ---------- Theme toggle (corner, symbol only) ---------- */
+.theme-toggle {
+  position: fixed; z-index: 40; right: calc(18px + env(safe-area-inset-right, 0px)); bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+  width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; cursor: pointer;
+  background: var(--glass-strong); padding: 0; transition: transform .35s var(--ease), border-color .3s;
+}
+.theme-toggle:hover { transform: rotate(18deg) scale(1.06); border-color: var(--accent); }
+.theme-toggle svg { width: 18px; height: 18px; overflow: visible; }
+.theme-toggle .core { fill: var(--ink); transition: transform .6s var(--ease); transform-origin: 12px 12px; }
+.theme-toggle .cut { fill: var(--bg); transition: transform .6s var(--ease); transform: translate(14px, -14px); }
+.theme-toggle .rays { stroke: var(--ink); stroke-width: 1.8; stroke-linecap: round; transition: transform .6s var(--ease), opacity .4s; transform-origin: 12px 12px; }
+.is-dark .theme-toggle .core { transform: scale(1.55); }
+.is-dark .theme-toggle .cut { transform: translate(5px, -4px); }
+.is-dark .theme-toggle .rays { transform: rotate(60deg) scale(.4); opacity: 0; }
+
+/* ---------- Hero ---------- */
+.hero { position: relative; padding-block: clamp(120px, 17vw, 190px) clamp(40px, 6vw, 72px); }
+#flow { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; -webkit-mask-image: linear-gradient(90deg, transparent 4%, #000 52%, #000 88%, transparent); mask-image: linear-gradient(90deg, transparent 4%, #000 52%, #000 88%, transparent); }
+.hero-copy { position: relative; display: flex; flex-direction: column; gap: 22px; max-width: 40rem; }
+.hero h1 { font: 800 clamp(3rem, 10.5vw, 7.6rem)/.9 var(--f-display); font-stretch: 125%; letter-spacing: -.025em; }
+.hero h1 span { display: block; overflow: hidden; padding-bottom: .06em; }
+.hero h1 i { display: block; font-style: normal; animation: rise 1s var(--ease) both; }
+.hero h1 span:nth-child(2) i { animation-delay: .09s; color: transparent; -webkit-text-stroke: 1.5px var(--ink); }
+@keyframes rise { from { transform: translateY(105%); } }
+.fade-up { animation: fadeUp .9s var(--ease) both; animation-delay: var(--d, .3s); }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } }
+.lede { font-size: clamp(1.05rem, 1.5vw, 1.2rem); line-height: 1.6; color: var(--ink-2); max-width: 34rem; }
+.lede strong { color: var(--ink); font-weight: 600; }
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 12px 20px; border-radius: 999px; border: 1px solid var(--line); background: transparent; text-decoration: none; font-weight: 500; font-size: .95rem; cursor: pointer; transition: transform .3s var(--ease), background-color .3s, border-color .3s, color .3s; }
+.btn svg { width: 14px; height: 14px; transition: transform .3s var(--ease); }
+.btn:hover { transform: translateY(-2px); border-color: var(--ink); }
+.btn:hover svg { transform: translateX(4px); }
+.btn.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.btn.primary:hover { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.flow-note { position: absolute; right: max(20px, env(safe-area-inset-right, 0px)); bottom: clamp(150px, 20vw, 230px); display: flex; flex-direction: column; gap: 6px; align-items: flex-end; text-align: right; opacity: .85; }
+.cbar { display: flex; align-items: center; gap: 8px; }
+.cbar b { display: block; width: 110px; height: 5px; border-radius: 3px; background: linear-gradient(90deg, var(--cm-0), var(--cm-1), var(--cm-2), var(--cm-3)); }
+.readout { position: relative; margin-top: clamp(48px, 8vw, 96px); display: grid; grid-template-columns: repeat(4, 1fr); }
+.readout div { padding: 22px 24px; display: flex; flex-direction: column; gap: 6px; border-left: 1px solid var(--line); min-width: 0; }
+.readout div:first-child { border-left: 0; }
+.readout dt { order: 2; font-size: .85rem; line-height: 1.4; color: var(--ink-2); }
+.readout dd { margin: 0; font: 700 clamp(1.6rem, 3vw, 2.2rem)/1 var(--f-display); font-stretch: 112%; font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+.readout dd small { font: 500 .8rem var(--f-mono); color: var(--ink-3); letter-spacing: 0; margin-left: 4px; }
+dl { margin: 0; }
+
+/* ---------- About ---------- */
+.about-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: clamp(24px, 4vw, 56px); align-items: start; }
+.about-text { display: flex; flex-direction: column; gap: 18px; font-size: 1.06rem; color: var(--ink-2); max-width: 36rem; }
+.about-text p:first-child { color: var(--ink); font-size: 1.2rem; line-height: 1.55; }
+.facts { padding: 8px 24px; }
+.facts li { display: grid; grid-template-columns: 6.5rem 1fr; gap: 12px; padding: 14px 0; border-top: 1px solid var(--line); font-size: .93rem; }
+.facts li:first-child { border-top: 0; }
+.facts span:first-child { font-family: var(--f-mono); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); padding-top: 3px; }
+
+/* ---------- Experience timeline ---------- */
+.org { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; margin-bottom: 26px; }
+.org strong { font: 600 1.05rem var(--f-body); }
+.timeline { position: relative; display: flex; flex-direction: column; gap: 18px; padding-left: 28px; }
+.timeline::before { content: ""; position: absolute; left: 5px; top: 10px; bottom: 10px; width: 1px; background: linear-gradient(var(--accent), var(--line) 30%, var(--line)); }
+.role { position: relative; padding: 24px 26px; display: grid; grid-template-columns: 11rem 1fr; gap: 10px 28px; transition: transform .4s var(--ease), border-color .3s; }
+.role::before { content: ""; position: absolute; left: -28px; top: 30px; width: 11px; height: 11px; border-radius: 50%; background: var(--bg); border: 1.5px solid var(--ink-3); transition: border-color .3s, background-color .3s, box-shadow .3s; }
+.role.current::before { border-color: var(--accent); background: var(--accent); box-shadow: 0 0 0 5px var(--accent-soft); }
+.role:hover { transform: translateX(4px); }
+.role:hover::before { border-color: var(--accent); }
+.role-meta { display: flex; flex-direction: column; gap: 6px; }
+.role h3 { font: 700 1.15rem/1.25 var(--f-display); font-stretch: 108%; }
+.role ul { display: flex; flex-direction: column; gap: 9px; color: var(--ink-2); font-size: .97rem; }
+.role li, .d-list li { position: relative; padding-left: 18px; }
+.role li::before, .d-list li::before { content: ""; position: absolute; left: 0; top: .72em; width: 8px; height: 1px; background: var(--accent); }
+
+/* ---------- Project cards ---------- */
+.grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px; }
+.card { position: relative; grid-column: span 3; display: flex; flex-direction: column; overflow: hidden; text-align: left; padding: 0; cursor: pointer; width: 100%; transition: transform .45s var(--ease), border-color .3s; }
+.card.wide { grid-column: span 6; flex-direction: row; }
+.card.third { grid-column: span 2; }
+.card::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .4s; background: radial-gradient(280px circle at var(--mx, 50%) var(--my, 50%), var(--accent-soft), transparent 70%); }
+.card:hover { transform: translateY(-4px); border-color: var(--accent); }
+.card:hover::after { opacity: 1; }
+.media { position: relative; aspect-ratio: 16 / 9; max-width: 100%; overflow: hidden; background: var(--body-fill); border-bottom: 1px solid var(--line); flex: none; }
+.card.wide .media { width: 54%; aspect-ratio: auto; min-height: 300px; border-bottom: 0; border-right: 1px solid var(--line); }
+.media canvas, .media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .9s var(--ease); }
+.card:hover .media canvas, .card:hover .media img { transform: scale(1.04); }
+.media figcaption { position: absolute; left: 12px; bottom: 10px; padding: 3px 8px; border-radius: 6px; background: var(--glass-strong); font: 400 .66rem var(--f-mono); letter-spacing: .04em; color: var(--ink-2); }
+.card-body { display: flex; flex-direction: column; gap: 12px; padding: 22px 24px 24px; min-width: 0; flex: 1; }
+.card-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 12px; align-items: center; }
+.status { display: inline-flex; align-items: center; gap: 7px; font: 500 .7rem var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
+.status::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--ink-3); }
+.status.live { color: var(--accent); }
+.status.live::before { background: var(--accent); animation: pulse 2.4s ease-out infinite; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 var(--accent); } 70%, 100% { box-shadow: 0 0 0 7px transparent; } }
+.card h3 { font: 700 clamp(1.2rem, 2vw, 1.5rem)/1.2 var(--f-display); font-stretch: 110%; letter-spacing: -.01em; text-wrap: balance; }
+.card p { color: var(--ink-2); font-size: .96rem; }
+.metrics { display: flex; flex-wrap: wrap; gap: 10px 26px; padding-top: 4px; }
+.metrics div { display: flex; flex-direction: column; gap: 2px; }
+.metrics b { font: 700 1.35rem/1.1 var(--f-display); font-stretch: 110%; font-variant-numeric: tabular-nums; }
+.metrics span { font-size: .78rem; color: var(--ink-3); max-width: 11rem; line-height: 1.35; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 6px; }
+.tag { padding: 3px 9px; border-radius: 999px; border: 1px solid var(--line); font: 400 .7rem var(--f-mono); color: var(--ink-2); }
+.more { display: inline-flex; align-items: center; gap: 8px; font-size: .86rem; font-weight: 500; color: var(--accent); }
+.more svg { width: 13px; height: 13px; transition: transform .3s var(--ease); }
+.card:hover .more svg { transform: translateX(4px); }
+
+/* ---------- Research ---------- */
+.papers { display: flex; flex-direction: column; }
+.paper { display: grid; grid-template-columns: 11rem 1fr auto; gap: 10px 28px; padding: 26px 4px; border-top: 1px solid var(--line); align-items: start; transition: padding-left .4s var(--ease); }
+.paper:last-child { border-bottom: 1px solid var(--line); }
+.paper:hover { padding-left: 14px; }
+.paper h3 { font: 600 1.12rem/1.35 var(--f-body); text-wrap: balance; }
+.paper-main { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.paper-main p { color: var(--ink-2); font-size: .96rem; max-width: 40rem; }
+.paper-link { font: 500 .72rem var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); border: 1px dashed var(--line); padding: 5px 10px; border-radius: 999px; text-decoration: none; white-space: nowrap; }
+a.paper-link { color: var(--accent); border-style: solid; border-color: var(--accent); }
+
+/* ---------- Skills ---------- */
+.skills { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.skill { padding: 24px 26px; display: flex; flex-direction: column; gap: 14px; }
+.skill.full { grid-column: 1 / -1; }
+.skill h3 { font: 500 .74rem var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { padding: 7px 13px; border-radius: 10px; border: 1px solid var(--line); font-size: .9rem; background: transparent; transition: border-color .25s, background-color .25s, transform .25s var(--ease); }
+.chip:hover { border-color: var(--accent); background: var(--accent-soft); transform: translateY(-2px); }
+
+/* ---------- Contact / footer ---------- */
+.contact { padding: clamp(28px, 5vw, 52px); display: grid; grid-template-columns: 1.2fr 1fr; gap: 28px 48px; align-items: center; }
+.contact h2 { font: 800 clamp(1.8rem, 4.4vw, 3rem)/1.02 var(--f-display); font-stretch: 120%; letter-spacing: -.02em; text-wrap: balance; }
+.contact p { color: var(--ink-2); margin-top: 14px; max-width: 30rem; }
+.contact-list { display: flex; flex-direction: column; }
+.contact-list li { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 0; border-top: 1px solid var(--line); min-width: 0; }
+.contact-list li:first-child { border-top: 0; }
+.contact-list .val { font-weight: 500; overflow-wrap: anywhere; min-width: 0; user-select: all; text-decoration: none; }
+.contact-list a.val:hover { color: var(--accent); }
+.copy { flex: none; padding: 5px 11px; border-radius: 999px; border: 1px solid var(--line); background: transparent; cursor: pointer; font: 500 .7rem var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); transition: border-color .25s, color .25s; }
+.copy:hover { border-color: var(--accent); color: var(--accent); }
+footer { padding-block: 34px 90px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 24px; }
+
+/* ---------- Project detail dialog ---------- */
+dialog { border: 0; padding: 0; background: transparent; color: var(--ink); width: min(900px, calc(100vw - 24px)); max-width: none; max-height: min(88vh, 900px); overflow: visible; }
+dialog::backdrop { background: rgba(8, 12, 18, .5); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+dialog[open] { animation: pop .45s var(--ease); }
+@keyframes pop { from { opacity: 0; transform: translateY(18px) scale(.98); } }
+.sheet { background: var(--glass-strong); max-height: inherit; overflow-y: auto; overscroll-behavior: contain; padding: clamp(22px, 4vw, 40px); display: flex; flex-direction: column; gap: 22px; }
+.sheet > * { flex: none; }
+.sheet-head { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; }
+.sheet h3 { font: 800 clamp(1.5rem, 3.4vw, 2.2rem)/1.08 var(--f-display); font-stretch: 115%; letter-spacing: -.015em; margin-top: 8px; text-wrap: balance; }
+.x { flex: none; width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line); background: transparent; cursor: pointer; display: grid; place-items: center; transition: transform .3s var(--ease), border-color .25s; }
+.x:hover { transform: rotate(90deg); border-color: var(--accent); }
+.x svg { width: 12px; height: 12px; }
+.sheet .overview { display: flex; flex-direction: column; gap: 12px; color: var(--ink-2); max-width: 44rem; }
+.spec { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.spec div { padding: 12px 14px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); margin: 0 -1px -1px 0; }
+.spec dt { font: 400 .68rem var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+.spec dd { margin: 4px 0 0; font-weight: 500; font-size: .93rem; }
+.gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+.gallery .media { border: 1px solid var(--line); border-radius: 12px; }
+.d-sec { display: flex; flex-direction: column; gap: 10px; }
+.d-sec h4 { font: 500 .74rem var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+.d-list { display: flex; flex-direction: column; gap: 8px; color: var(--ink-2); font-size: .96rem; max-width: 46rem; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 860px) {
+  .about-grid, .contact { grid-template-columns: 1fr; }
+  .card, .card.third { grid-column: span 6; }
+  .card.wide { flex-direction: column; }
+  .card.wide .media { width: 100%; aspect-ratio: 16 / 9; min-height: 0; border-right: 0; border-bottom: 1px solid var(--line); }
+  .role, .paper { grid-template-columns: 1fr; }
+  .readout { grid-template-columns: repeat(2, 1fr); }
+  .readout div:nth-child(3) { border-left: 0; }
+  .readout div:nth-child(n+3) { border-top: 1px solid var(--line); }
+  .skills { grid-template-columns: 1fr; }
+  #flow { -webkit-mask-image: linear-gradient(180deg, transparent 30%, #000 62%, #000 86%, transparent); mask-image: linear-gradient(180deg, transparent 30%, #000 62%, #000 86%, transparent); opacity: .8; }
+  .hero { padding-bottom: 28px; }
+  .hero-copy { padding-bottom: 150px; }
+  .flow-note { display: none; }
+  .readout { margin-top: 0; }
+}
+@media (max-width: 520px) {
+  .nav-inner { margin-inline: 12px; width: auto; }
+  .readout div { padding: 16px; }
+  .facts li { grid-template-columns: 1fr; gap: 2px; }
+  .timeline { padding-left: 22px; }
+  .role { padding: 20px; }
+  .role::before { left: -22px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
+  .rv { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="backdrop" aria-hidden="true">
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+  <canvas id="mesh"></canvas>
+</div>
+
+<header class="nav">
+  <nav class="nav-inner glass" aria-label="Primary">
+    <a class="brand" href="#top" aria-label="Forrest Drury, back to top">FD</a>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#research">Research</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<button class="theme-toggle glass" id="themeToggle" type="button" aria-label="Switch colour theme" title="Switch theme">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <g class="rays"><path d="M12 1.5v2.6M12 19.9v2.6M1.5 12h2.6M19.9 12h2.6M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8" fill="none"/></g>
+    <circle class="core" cx="12" cy="12" r="4.6"/>
+    <circle class="cut" cx="12" cy="12" r="6.2"/>
+  </svg>
+</button>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <div class="hero">
+    <canvas id="flow" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <div class="hero-copy">
+        <p class="eyebrow fade-up" style="--d:.05s">Aerodynamics · CFD · Composites</p>
+        <h1><span><i>Forrest</i></span><span><i>Drury</i></span></h1>
+        <p class="lede fade-up" style="--d:.35s">I lead aerodynamics for <strong>Gaucho Racing</strong>, UC Santa Barbara's Formula SAE electric team. I design wings, diffusers and bodywork in SOLIDWORKS and Ansys Fluent, help build them in carbon fiber, and drive the car they end up on.</p>
+        <div class="cta-row fade-up" style="--d:.5s">
+          <a class="btn primary" href="#projects">See the projects <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7h12M8 2l5 5-5 5"/></svg></a>
+          <a class="btn" href="#contact">Get in touch</a>
+        </div>
+      </div>
+      <dl class="readout glass fade-up" style="--d:.65s" id="readout"></dl>
+    </div>
+    <div class="flow-note mono fade-up" style="--d:1s" aria-hidden="true">
+      <span>Potential flow · inverted Joukowski section · α = −6°</span>
+      <span class="cbar">0.0 <b></b> 1.8 &nbsp;|V| / V∞</span>
+    </div>
+  </div>
+
+  <!-- ============ ABOUT ============ -->
+  <section id="about">
+    <div class="wrap">
+      <div class="sec-head"><p class="eyebrow">About</p><h2>Physics student who spends most of the week on a race car.</h2></div>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>I'm a third-year physics major at UC Santa Barbara. I joined Gaucho Racing as an aerodynamics engineer in my first quarter and took over the aero team a year later.</p>
+          <p>That year we built the first aerodynamic package the program has run at competition. I'm now leading the second one. The job covers the whole loop: concept, CAD, RANS in Fluent, design reviews, molds, layups, and track testing.</p>
+          <p>I like the part of the work where simulation meets the shop. A geometry has to hold up in CFD, come out of a mold cleanly, and survive a season of cones. I also drive the car, which keeps my assumptions about balance and drag tied to what it's like at the wheel.</p>
+        </div>
+        <ul class="facts glass" id="facts"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EXPERIENCE ============ -->
+  <section id="experience">
+    <div class="wrap">
+      <div class="sec-head"><p class="eyebrow">Experience</p><h2>Formula SAE</h2></div>
+      <div class="org"><strong>Gaucho Racing FSAE</strong><span class="mono">Santa Barbara, CA · Electric vehicle class</span></div>
+      <div class="timeline" id="timeline"></div>
+    </div>
+  </section>
+
+  <!-- ============ PROJECTS ============ -->
+  <section id="projects">
+    <div class="wrap">
+      <div class="sec-head"><p class="eyebrow">Featured projects</p><h2>Two aero packages and the machine that cuts their cores.</h2><p>Open a card for scope, methods and manufacturing notes.</p></div>
+      <div class="grid" id="projectGrid"></div>
+    </div>
+  </section>
+
+  <!-- ============ RESEARCH ============ -->
+  <section id="research">
+    <div class="wrap">
+      <div class="sec-head"><p class="eyebrow">Undergraduate research</p><h2>Underbody and diffuser studies at UCSB</h2></div>
+      <div class="papers" id="papers"></div>
+    </div>
+  </section>
+
+  <!-- ============ SKILLS ============ -->
+  <section id="skills">
+    <div class="wrap">
+      <div class="sec-head"><p class="eyebrow">Technical skills</p><h2>Tools and methods I use week to week.</h2></div>
+      <div class="skills" id="skillGrid"></div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section id="contact">
+    <div class="wrap">
+      <div class="contact glass">
+        <div>
+          <p class="eyebrow">Contact</p>
+          <h2 style="margin-top:14px">Looking for CFD and aerodynamics internships.</h2>
+          <p>Aerospace, automotive or motorsport. Happy to walk through any of the work here in more detail, including the parts that didn't work the first time.</p>
+        </div>
+        <ul class="contact-list" id="contactList"></ul>
+      </div>
+      <footer class="mono">
+        <span>© <span id="year"></span> Forrest Drury · Rio Vista &amp; Santa Barbara, CA</span>
+        <span>Hero animation: analytic potential flow with the Kutta condition. The real CFD is in the projects.</span>
+      </footer>
+    </div>
+  </section>
+</main>
+
+<dialog id="detail" aria-labelledby="detailTitle"><div class="sheet glass" id="sheet"></div></dialog>
+
+<script>
+/* =====================================================================
+   CONTENT
+   Everything on the page below the hero is rendered from this object.
+   To add a project, research entry, role or skill group, add an item
+   to the matching array. No markup changes needed.
+
+   Project media: { kind, caption, src? }
+     - src:  path to a real image (CFD contour, mesh screenshot, CAD
+             render, layup photo). When present it replaces the drawing.
+     - kind: 'contour' | 'mesh' | 'cad' | 'layup' picks the generated
+             placeholder drawing used until a real image is supplied.
+   Project layout: 'wide' (full row), 'half' (default), 'third'.
+   ===================================================================== */
+const SITE = {
+  readout: [
+    { value: '30', unit: '/ 100', label: 'Competition finish, the best score in program history' },
+    { value: '80', unit: '%', label: 'of vehicle mass in downforce at 77 mph, GR26' },
+    { value: '110', unit: '%', label: 'downforce target for GR27 at the same speed' },
+    { value: '20', unit: 'engineers', label: 'on the aerodynamics team I lead' }
+  ],
+
+  facts: [
+    ['Now', 'Aerodynamics Team Lead and driver, Gaucho Racing FSAE'],
+    ['Study', 'B.S. Physics, UC Santa Barbara. Graduating June 2028'],
+    ['Research', 'Two funded CFD studies on underbody and diffuser aerodynamics'],
+    ['Based', 'Santa Barbara, CA. From Rio Vista, CA. U.S. citizen'],
+    ['Also', 'Eagle Scout. Former City of Rio Vista Planning Commissioner']
+  ],
+
+  experience: [
+    {
+      role: 'Aerodynamics Team Lead', dates: 'Jun 2025 – Present', current: true,
+      points: [
+        'Led design, manufacturing, testing and validation of the first operational aerodynamic package in Gaucho Racing history, in my first year as lead.',
+        'Run a 20-engineer team through the full lifecycle of the package and defend the design in reviews with industry judges. The car placed 30th of 100 teams, our highest score to date, on the program\'s fourth competition vehicle.',
+        'Wrote and teach the fluid dynamics and CFD onboarding curriculum that new members use to learn the theory, methods and practice of vehicle aerodynamics.'
+      ]
+    },
+    {
+      role: 'Racing Driver', dates: 'Jun 2025 – Present', current: true,
+      points: [
+        'Drive the electric race car in competition, managing pace, thermal limits and power use over a stint.',
+        'Bring vehicle dynamics feedback from the seat back to the engineering subteams.'
+      ]
+    },
+    {
+      role: 'Aerodynamics Engineer', dates: 'Sep 2024 – May 2025',
+      points: [
+        'Designed front wing geometries in SOLIDWORKS and Ansys Fluent, trading downforce against drag.',
+        'Manufactured composite wings, bodywork, diffusers and nosecone assemblies.'
+      ]
+    }
+  ],
+
+  projects: [
+    {
+      id: 'gr27', layout: 'wide',
+      title: 'GR27 Aerodynamic Package',
+      status: 'In development', live: true, dates: 'Jun 2026 – Present',
+      scope: 'Front wing, rear wing, side diffusers, nosecone, bodywork',
+      summary: 'Second-generation package for the 2027 car. The target is downforce equal to 110% of vehicle mass at 77 mph, up from 80% on GR26.',
+      metrics: [
+        { value: '−7%', label: 'lap time in OptimumLap' },
+        { value: '+35%', label: 'peak lateral acceleration' },
+        { value: '~2 min', label: 'saved over endurance' }
+      ],
+      tags: ['Ansys Fluent', 'SST k-ω', 'OptimumLap', 'SOLIDWORKS'],
+      media: [
+        { kind: 'contour', caption: 'Placeholder · velocity contour', alpha: -9 },
+        { kind: 'mesh', caption: 'Placeholder · surface and volume mesh' },
+        { kind: 'cad', caption: 'Placeholder · CAD render' }
+      ],
+      detail: {
+        overview: [
+          'I am designing the GR27 package and overseeing its development across the aero team. GR26 proved the team could build and run a full package. GR27 is about getting more load out of the same rules box and being more deliberate about where it acts on the car.',
+          'Lap simulation in OptimumLap puts the added downforce at a 7% lap time reduction and a 35% increase in peak lateral acceleration. Over endurance that is roughly two minutes, and potentially up to ten places in overall scoring.'
+        ],
+        specs: [
+          ['Role', 'Lead designer'], ['Status', 'In development'], ['Target', '110% vehicle mass at 77 mph'],
+          ['Solver', 'Ansys Fluent, RANS'], ['Turbulence', 'SST k-ω'], ['Lap sim', 'OptimumLap']
+        ],
+        sections: [
+          { heading: 'CFD approach', items: [
+            'Placeholder: mesh strategy, cell counts, y⁺ targets and domain size for the full-car model.',
+            'Placeholder: how batch runs are scripted through journals and submitted to the HPC cluster.',
+            'Placeholder: validation plan against GR26 track data.'
+          ] },
+          { heading: 'Manufacturing', items: [
+            'Placeholder: mold approach, core materials and layup schedule for the wing elements.',
+            'Placeholder: what changed from GR26 after a season of running the parts.'
+          ] }
+        ]
+      }
+    },
+    {
+      id: 'gr26',
+      title: 'GR26 Aerodynamic Package',
+      status: 'Raced', dates: 'Jun 2025 – Jun 2026',
+      scope: 'Front wing, rear wing, side diffusers, side pods, nosecone, bodywork',
+      summary: 'The first aero package Gaucho Racing has run at competition. It added normal force equal to 80% of vehicle mass at 77 mph.',
+      metrics: [
+        { value: '80%', label: 'of vehicle mass at 77 mph' },
+        { value: '30th', label: 'of 100 teams' }
+      ],
+      tags: ['Ansys Fluent', 'Poly-hexcore', 'Carbon fiber'],
+      media: [
+        { kind: 'mesh', caption: 'Placeholder · boundary-layer mesh' },
+        { kind: 'contour', caption: 'Placeholder · pressure contour', alpha: -5 },
+        { kind: 'layup', caption: 'Placeholder · layup photo' }
+      ],
+      detail: {
+        overview: [
+          'I designed and managed the aerodynamic package for the 2026 competition car. Before this the team had never taken a working aero package to an event, so a lot of the year went into building the process as well as the parts: review gates, a simulation workflow people could repeat, and manufacturing methods the shop could support.',
+          'The car finished 30th of 100 teams, the highest score in the program\'s history.'
+        ],
+        specs: [
+          ['Role', 'Lead designer and manager'], ['Status', 'Competed 2026'], ['Result', '+80% vehicle mass at 77 mph'],
+          ['Solver', 'Ansys Fluent, RANS'], ['Mesh', 'Unstructured, poly-hexcore'], ['Team', '20 engineers']
+        ],
+        sections: [
+          { heading: 'Design and simulation', items: [
+            'Placeholder: element count and section choices for the front and rear wings.',
+            'Placeholder: how the side diffusers and side pods were packaged around cooling and suspension.',
+            'Placeholder: aero balance and how it moved with ride height.'
+          ] },
+          { heading: 'Manufacturing', items: [
+            'Wings built around hotwire-cut foam cores with carbon fiber skins.',
+            'Placeholder: bodywork and nosecone tooling, cure process, final weights.'
+          ] },
+          { heading: 'What I would change', items: [
+            'Placeholder: the honest list. Judges and engineers both read this part.'
+          ] }
+        ]
+      }
+    },
+    {
+      id: 'hotwire',
+      title: 'CNC Hotwire Cutter',
+      status: 'In service', dates: 'Jul 2025 – Present',
+      scope: '4-axis, stepper driven, Arduino controlled',
+      summary: 'A four-axis hotwire cutter I built to cut structural airfoil cores for carbon layups. It replaced hand-cut templates.',
+      metrics: [
+        { value: '4', label: 'independent axes for tapered sections' }
+      ],
+      tags: ['Arduino', 'Stepper motors', 'Foam cores'],
+      media: [
+        { kind: 'layup', caption: 'Placeholder · core and ply stack' },
+        { kind: 'cad', caption: 'Placeholder · machine CAD' }
+      ],
+      detail: {
+        overview: [
+          'Every wing element on the car starts as a foam core. I built this machine so the cores match the CAD section along the full span, including tapered and twisted elements, and I keep it running for the team.'
+        ],
+        specs: [
+          ['Role', 'Designer and builder'], ['Axes', '4, two per tower'], ['Drive', 'Stepper motors'], ['Control', 'Arduino']
+        ],
+        sections: [
+          { heading: 'Build notes', items: [
+            'Placeholder: frame, motion hardware, wire tension and power supply.',
+            'Placeholder: toolpath generation from airfoil coordinates and kerf compensation.',
+            'Placeholder: measured accuracy against the CAD profile.'
+          ] }
+        ]
+      }
+    }
+  ],
+
+  research: [
+    {
+      title: 'Analysis of an Aerodynamic Underbody for a Formula-Style Electric Vehicle',
+      dates: 'Oct 2025 – May 2026', advisor: 'Prof. Tengiz Bibilashvili, UCSB',
+      summary: 'Studied a full-body undertray for the 2026 car. Iterated designs against CFD models, worked through what could realistically be manufactured, and presented the final findings. I wrote the proposal and secured the grant funding.',
+      link: null   // e.g. 'papers/underbody.pdf'
+    },
+    {
+      title: 'Optimization of Side-Mounted Diffusers for a Formula-Style Electric Vehicle',
+      dates: 'Oct 2024 – May 2025', advisor: 'Prof. Frederic Gibou, UCSB',
+      summary: 'Ran CFD in Ansys Fluent to map how flow from the front wing and nosecone arrives at the side diffusers, then used that to change the diffuser geometry for more downforce.',
+      link: null
+    }
+  ],
+
+  skills: [
+    { group: 'CFD methods', full: true, items: ['Steady and transient RANS', 'SST k-ω', 'Unstructured meshing', 'Poly-hexcore', 'Boundary-layer y⁺ sizing', 'MRF', 'Batch simulation', 'Journal and TUI scripting'] },
+    { group: 'Simulation software', items: ['Ansys Fluent', 'Ansys Mechanical', 'Cadence Fidelity', 'Pointwise'] },
+    { group: 'CAD and design', items: ['SOLIDWORKS', 'Fusion', 'Adobe'] },
+    { group: 'Computing', items: ['Python', 'Linux', 'HPC clusters'] },
+    { group: 'Manufacturing', items: ['Carbon fiber layup', 'Wings, bodywork and diffusers', 'CNC hotwire foam cores', 'Arduino and stepper control'] }
+  ],
+
+  contact: [
+    { label: 'Email', value: 'fdrury@ucsb.edu', copy: true },
+    { label: 'LinkedIn', value: 'linkedin.com/in/forrest-drury-734218335', href: 'https://www.linkedin.com/in/forrest-drury-734218335' }
+    // { label: 'Résumé', value: 'Download PDF', href: 'resume.pdf' }
+  ]
+};
+
+/* =====================================================================
+   RENDER
+   ===================================================================== */
+const $ = (s, r = document) => r.querySelector(s);
+const root = document.documentElement;
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const ARROW = '<svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7h12M8 2l5 5-5 5"/></svg>';
+
+const mediaHTML = (m, i) => `<figure class="media">${m.src
+  ? `<img src="${m.src}" alt="${m.caption || ''}" loading="lazy">`
+  : `<canvas class="fig" data-kind="${m.kind}" data-alpha="${m.alpha ?? -6}" data-seed="${i + 1}" role="img" aria-label="${m.caption || m.kind}"></canvas>`}
+  ${m.caption ? `<figcaption>${m.caption}</figcaption>` : ''}</figure>`;
+
+$('#readout').innerHTML = SITE.readout.map(r => `<div><dt>${r.label}</dt><dd>${r.value}<small>${r.unit}</small></dd></div>`).join('');
+$('#facts').innerHTML = SITE.facts.map(f => `<li><span>${f[0]}</span><span>${f[1]}</span></li>`).join('');
+$('#timeline').innerHTML = SITE.experience.map(e => `
+  <article class="role glass${e.current ? ' current' : ''}">
+    <div class="role-meta"><h3>${e.role}</h3><span class="mono">${e.dates}</span></div>
+    <ul>${e.points.map(p => `<li>${p}</li>`).join('')}</ul>
+  </article>`).join('');
+$('#projectGrid').innerHTML = SITE.projects.map((p, i) => `
+  <button type="button" class="card glass ${p.layout || ''}" data-project="${p.id}" aria-haspopup="dialog">
+    ${mediaHTML(p.media[0], i)}
+    <div class="card-body">
+      <div class="card-top"><span class="status${p.live ? ' live' : ''}">${p.status}</span><span class="mono">${p.dates}</span></div>
+      <h3>${p.title}</h3>
+      <p>${p.summary}</p>
+      <div class="metrics">${p.metrics.map(m => `<div><b>${m.value}</b><span>${m.label}</span></div>`).join('')}</div>
+      <div class="tags">${p.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+      <span class="more">Details ${ARROW}</span>
+    </div>
+  </button>`).join('');
+$('#papers').innerHTML = SITE.research.map(r => `
+  <article class="paper">
+    <span class="mono">${r.dates}</span>
+    <div class="paper-main"><h3>${r.title}</h3><p>${r.summary}</p><span class="mono">Advisor: ${r.advisor}</span></div>
+    ${r.link ? `<a class="paper-link" href="${r.link}">Read paper</a>` : `<span class="paper-link">Write-up coming</span>`}
+  </article>`).join('');
+$('#skillGrid').innerHTML = SITE.skills.map(s => `
+  <div class="skill glass${s.full ? ' full' : ''}"><h3>${s.group}</h3><div class="chips">${s.items.map(i => `<span class="chip">${i}</span>`).join('')}</div></div>`).join('');
+$('#contactList').innerHTML = SITE.contact.map(c => `
+  <li><div style="min-width:0"><div class="mono" style="text-transform:uppercase;letter-spacing:.1em">${c.label}</div>
+  ${c.href ? `<a class="val" href="${c.href}" target="_blank" rel="noopener">${c.value}</a>` : `<span class="val">${c.value}</span>`}</div>
+  ${c.copy ? `<button type="button" class="copy" data-copy="${c.value}">Copy</button>` : ''}</li>`).join('');
+$('#year').textContent = new Date().getFullYear();
+
+/* ---------- Project dialog ---------- */
+const dlg = $('#detail'), sheet = $('#sheet');
+function openProject(id) {
+  const p = SITE.projects.find(x => x.id === id); if (!p) return;
+  const d = p.detail || {};
+  sheet.innerHTML = `
+    <div class="sheet-head">
+      <div><span class="status${p.live ? ' live' : ''}">${p.status}</span> <span class="mono">&nbsp;· ${p.dates}</span>
+        <h3 id="detailTitle">${p.title}</h3><p class="mono" style="margin-top:8px">${p.scope}</p></div>
+      <button type="button" class="x" aria-label="Close" data-close><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M1 1l10 10M11 1L1 11"/></svg></button>
+    </div>
+    <div class="overview">${(d.overview || [p.summary]).map(t => `<p>${t}</p>`).join('')}</div>
+    ${d.specs ? `<dl class="spec">${d.specs.map(s => `<div><dt>${s[0]}</dt><dd>${s[1]}</dd></div>`).join('')}</dl>` : ''}
+    <div class="gallery">${p.media.map(mediaHTML).join('')}</div>
+    ${(d.sections || []).map(s => `<div class="d-sec"><h4>${s.heading}</h4><ul class="d-list">${s.items.map(i => `<li>${i}</li>`).join('')}</ul></div>`).join('')}`;
+  dlg.showModal(); sheet.scrollTop = 0; drawFigures(sheet);
+}
+document.addEventListener('click', e => {
+  const card = e.target.closest('[data-project]'); if (card) return openProject(card.dataset.project);
+  if (e.target.closest('[data-close]') || e.target === dlg) return dlg.close();
+  const cp = e.target.closest('[data-copy]');
+  if (cp) {
+    const done = () => { cp.textContent = 'Copied'; setTimeout(() => cp.textContent = 'Copy', 1600); };
+    const fallback = () => { const r = document.createRange(); r.selectNodeContents(cp.parentElement.querySelector('.val')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); cp.textContent = 'Selected'; setTimeout(() => cp.textContent = 'Copy', 1600); };
+    try { navigator.clipboard.writeText(cp.dataset.copy).then(done, fallback); } catch (err) { fallback(); }
+  }
+});
+
+/* ---------- Card spotlight follows the pointer ---------- */
+document.addEventListener('pointermove', e => {
+  const c = e.target.closest && e.target.closest('.card'); if (!c) return;
+  const r = c.getBoundingClientRect();
+  c.style.setProperty('--mx', (e.clientX - r.left) + 'px'); c.style.setProperty('--my', (e.clientY - r.top) + 'px');
+}, { passive: true });
+
+/* ---------- Scroll reveal + nav highlight ---------- */
+if ('IntersectionObserver' in window && !reduced) {
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.sec-head, .about-text, .facts, .org, .role, .card, .paper, .skill, .contact').forEach(el => {
+    if (el.getBoundingClientRect().top < innerHeight * .95) return;      // already on screen: leave visible
+    const sibs = [...el.parentElement.children]; el.style.setProperty('--d', Math.min(sibs.indexOf(el), 4) * 70 + 'ms');
+    el.classList.add('rv'); io.observe(el);
+  });
+}
+if ('IntersectionObserver' in window) {
+  const links = [...document.querySelectorAll('.nav-links a')];
+  const spy = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) links.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id));
+  }), { rootMargin: '-40% 0px -55% 0px' });
+  document.querySelectorAll('main section[id]').forEach(s => spy.observe(s));
+}
+
+/* =====================================================================
+   THEME
+   ===================================================================== */
+const darkMQ = matchMedia('(prefers-color-scheme: dark)');
+const isDark = () => root.dataset.theme ? root.dataset.theme === 'dark' : darkMQ.matches;
+const css = n => getComputedStyle(root).getPropertyValue(n).trim();
+function repaint() { root.classList.toggle('is-dark', isDark()); buildLUT(); drawMesh(); drawFigures(document); flow.reset(); }
+$('#themeToggle').addEventListener('click', e => {
+  const next = isDark() ? 'light' : 'dark';
+  const apply = () => { root.dataset.theme = next; try { localStorage.setItem('fd-theme', next); } catch (err) {} repaint(); };
+  if (!document.startViewTransition || reduced) {
+    root.classList.add('theming'); apply(); setTimeout(() => root.classList.remove('theming'), 600); return;
+  }
+  const b = e.currentTarget.getBoundingClientRect(), x = b.left + b.width / 2, y = b.top + b.height / 2;
+  const rad = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+  document.startViewTransition(apply).ready.then(() => root.animate(
+    { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${rad}px at ${x}px ${y}px)`] },
+    { duration: 750, easing: 'cubic-bezier(.4,0,.2,1)', pseudoElement: '::view-transition-new(root)' }));
+});
+darkMQ.addEventListener('change', () => { if (!root.dataset.theme) repaint(); });
+new MutationObserver(repaint).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+
+/* ---------- Colour map (slow → fast), rebuilt per theme ---------- */
+let LUT = [];
+const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+function buildLUT() {
+  const stops = [0, 1, 2, 3].map(i => hex(css('--cm-' + i)));
+  LUT = Array.from({ length: 64 }, (_, k) => {
+    const t = k / 63 * 3, i = Math.min(2, t | 0), f = t - i;
+    return stops[i].map((c, j) => Math.round(c + (stops[i + 1][j] - c) * f));
+  });
+}
+const lut = v => LUT[Math.max(0, Math.min(63, Math.round(v / 1.8 * 63)))];
+
+/* =====================================================================
+   FLOW MODEL
+   Potential flow past a Joukowski airfoil: a cylinder with circulation
+   in the ζ-plane, mapped by z = ζ + 1/ζ. Circulation is set by the
+   Kutta condition. Negative camber and incidence, so it makes downforce.
+   ===================================================================== */
+const MUX = -0.09, MUY = -0.075, RAD = Math.hypot(1 - MUX, MUY), BETA = Math.asin(MUY / RAD);
+const flowParams = deg => { const a = deg * Math.PI / 180; return { ca: Math.cos(a), sa: Math.sin(a), g: 2 * RAD * Math.sin(a + BETA) }; };  // g = Γ / 2π
+const V = { wr: 0, wi: 0, dr: 0, di: 0, sp: 0 };
+function vel(x, y, P) {           // complex velocity in the z-plane at ζ = x + iy
+  const ax = x - MUX, ay = y - MUY, m = ax * ax + ay * ay;
+  const ir = (ax * ax - ay * ay) / (m * m), ii = -2 * ax * ay / (m * m), R2 = RAD * RAD;
+  const fr = P.ca - R2 * (P.ca * ir - P.sa * ii) + P.g * ay / m;
+  const fi = -P.sa - R2 * (P.ca * ii + P.sa * ir) + P.g * ax / m;
+  const n = x * x + y * y, dr = 1 - (x * x - y * y) / (n * n), di = 2 * x * y / (n * n), d2 = Math.max(dr * dr + di * di, .012);
+  V.wr = (fr * dr + fi * di) / d2; V.wi = (fi * dr - fr * di) / d2; V.dr = dr; V.di = di; V.d2 = d2; V.sp = Math.hypot(V.wr, V.wi);
+}
+const Z = { x: 0, y: 0, r: 0 };
+function inverse(zx, zy) {        // z → ζ, choosing the root outside the cylinder
+  const ax = zx * zx - zy * zy - 4, ay = 2 * zx * zy, m = Math.hypot(ax, ay);
+  const sr = Math.sqrt((m + ax) / 2), si = (ay < 0 ? -1 : 1) * Math.sqrt(Math.max(0, (m - ax) / 2));
+  const x1 = (zx + sr) / 2, y1 = (zy + si) / 2, x2 = (zx - sr) / 2, y2 = (zy - si) / 2;
+  const r1 = Math.hypot(x1 - MUX, y1 - MUY), r2 = Math.hypot(x2 - MUX, y2 - MUY);
+  if (r1 >= r2) { Z.x = x1; Z.y = y1; Z.r = r1; } else { Z.x = x2; Z.y = y2; Z.r = r2; }
+}
+function airfoil(n, k = 1) {      // outline in the z-plane; k > 1 gives offset curves
+  const pts = [];
+  for (let i = 0; i <= n; i++) {
+    const t = i / n * Math.PI * 2, x = MUX + RAD * k * Math.cos(t), y = MUY + RAD * k * Math.sin(t), m = x * x + y * y;
+    pts.push([x + x / m, y - y / m]);
+  }
+  return pts;
+}
+function fit(c) {
+  const w = c.clientWidth, h = c.clientHeight, dpr = Math.min(devicePixelRatio || 1, 2);
+  if (!w || !h) return null;
+  c.width = Math.round(w * dpr); c.height = Math.round(h * dpr);
+  const g = c.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0); return { g, w, h };
+}
+
+/* ---------- Hero streamlines ---------- */
+const flow = (() => {
+  const c = $('#flow'), P = flowParams(-6);
+  let g, w, h, cx, cy, s, parts = [], outline, raf = 0, visible = true, ink = '';
+  const toScreen = (zx, zy) => [cx + (zx * P.ca + zy * P.sa) * s, cy - (-zx * P.sa + zy * P.ca) * s];
+  function spawn(p, anywhere) {
+    for (let k = 0; k < 8; k++) {
+      const sx = anywhere ? Math.random() * w : -10, sy = Math.random() * h;
+      const xr = (sx - cx) / s, yr = (cy - sy) / s;
+      inverse(xr * P.ca - yr * P.sa, xr * P.sa + yr * P.ca);
+      if (Z.r > RAD * 1.04) { p.x = Z.x; p.y = Z.y; p.sx = sx; p.sy = sy; p.life = 160 + Math.random() * 420; return; }
+    }
+    p.life = 0;
+  }
+  function step(alpha) {
+    g.lineWidth = 1.1;
+    for (const p of parts) {
+      if (p.life <= 0) { spawn(p, false); continue; }
+      vel(p.x, p.y, P);
+      const dt = .02, vx = V.wr, vy = -V.wi;                              // dζ/dt = conj(w) / (dz/dζ)
+      p.x += (vx * V.dr + vy * V.di) / V.d2 * dt; p.y += (vy * V.dr - vx * V.di) / V.d2 * dt;
+      const ax = p.x - MUX, ay = p.y - MUY;
+      if (ax * ax + ay * ay < RAD * RAD * 1.012) { p.life = 0; continue; }
+      const n = p.x * p.x + p.y * p.y, q = toScreen(p.x + p.x / n, p.y - p.y / n), col = lut(V.sp);
+      g.strokeStyle = `rgba(${col[0]},${col[1]},${col[2]},${alpha})`;
+      g.beginPath(); g.moveTo(p.sx, p.sy); g.lineTo(q[0], q[1]); g.stroke();
+      p.sx = q[0]; p.sy = q[1];
+      if (--p.life <= 0 || q[0] > w + 20 || q[1] < -40 || q[1] > h + 40) p.life = 0;
+    }
+  }
+  function body() {
+    g.beginPath(); outline.forEach((q, i) => i ? g.lineTo(q[0], q[1]) : g.moveTo(q[0], q[1])); g.closePath();
+    g.globalCompositeOperation = 'destination-out'; g.fillStyle = '#000'; g.fill();
+    g.globalCompositeOperation = 'source-over'; g.strokeStyle = ink; g.globalAlpha = .55; g.lineWidth = 1.2; g.stroke(); g.globalAlpha = 1;
+  }
+  function frame() {
+    raf = 0; if (!visible || document.hidden) return;
+    g.globalCompositeOperation = 'destination-out'; g.fillStyle = 'rgba(0,0,0,.075)'; g.fillRect(0, 0, w, h);
+    g.globalCompositeOperation = 'source-over';
+    step(.62); body(); raf = requestAnimationFrame(frame);
+  }
+  function reset() {
+    const f = fit(c); if (!f) return; ({ g, w, h } = f); ink = css('--ink');
+    const narrow = w < 860;
+    s = (narrow ? w * .78 : w * .34) / 4; cx = narrow ? w * .54 : w * .71; cy = narrow ? h - 330 : h * .4;
+    if (narrow && h < 700) cy = h * .62;
+    outline = airfoil(140).map(q => toScreen(q[0], q[1]));
+    parts = Array.from({ length: Math.min(720, Math.round(w * h / 2300)) }, () => { const p = {}; spawn(p, true); return p; });
+    cancelAnimationFrame(raf); raf = 0;
+    if (reduced) { for (let i = 0; i < 240; i++) step(.1); body(); } else raf = requestAnimationFrame(frame);
+  }
+  if ('IntersectionObserver' in window) new IntersectionObserver(es => { visible = es[0].isIntersecting; if (visible && !raf && !reduced && g) raf = requestAnimationFrame(frame); }).observe(c);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden && visible && !raf && !reduced && g) raf = requestAnimationFrame(frame); });
+  return { reset };
+})();
+
+/* ---------- Page background: faint unstructured mesh ---------- */
+function drawMesh() {
+  const f = fit($('#mesh')); if (!f) return; const { g, w, h } = f;
+  let seed = 7; const rnd = () => ((seed = Math.imul(seed ^ seed >>> 15, 1 | seed) + 0x6D2B79F5 | 0) >>> 0) / 4294967296;
+  const cell = w < 700 ? 54 : 68, rows = Math.ceil(h / (cell * .866)) + 2, cols = Math.ceil(w / cell) + 3, pt = [];
+  for (let j = 0; j < rows; j++) { pt[j] = []; for (let i = 0; i < cols; i++) pt[j][i] = [(i - 1 + (j % 2) / 2) * cell + (rnd() - .5) * cell * .5, (j - 1) * cell * .866 + (rnd() - .5) * cell * .5]; }
+  g.strokeStyle = `rgba(${css('--mesh-rgb')},${css('--mesh-a')})`; g.lineWidth = .7; g.beginPath();
+  for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) {
+    const a = pt[j][i], o = j % 2;
+    [[j, i + 1], [j + 1, i + o - 1], [j + 1, i + o]].forEach(([jj, ii]) => { const b = pt[jj] && pt[jj][ii]; if (b) { g.moveTo(a[0], a[1]); g.lineTo(b[0], b[1]); } });
+  }
+  g.stroke();
+}
+
+/* ---------- Placeholder figures for project media ---------- */
+function drawFigures(scope) { scope.querySelectorAll('canvas.fig').forEach(c => { const f = fit(c); if (f) FIG[c.dataset.kind](f, c); }); }
+const pathOf = (g, pts) => { g.beginPath(); pts.forEach((q, i) => i ? g.lineTo(q[0], q[1]) : g.moveTo(q[0], q[1])); };
+const FIG = {
+  contour({ g, w, h }, c) {       // banded velocity magnitude around the section
+    const P = flowParams(+c.dataset.alpha), s = w / 6.4, cx = w * .5, cy = h * .5;
+    const W = Math.round(w), H = Math.round(h), off = document.createElement('canvas'); off.width = W; off.height = H;
+    const og = off.getContext('2d'), img = og.createImageData(W, H), d = img.data, bf = hex(css('--body-fill'));
+    for (let py = 0, k = 0; py < H; py++) for (let px = 0; px < W; px++, k += 4) {
+      const xr = (px - cx) / s, yr = (cy - py) / s; inverse(xr * P.ca - yr * P.sa, xr * P.sa + yr * P.ca);
+      let col = bf;
+      if (Z.r >= RAD) { vel(Z.x, Z.y, P); col = lut(Math.round(Math.min(V.sp, 1.8) * 9) / 9); }
+      d[k] = col[0]; d[k + 1] = col[1]; d[k + 2] = col[2]; d[k + 3] = 255;
+    }
+    og.putImageData(img, 0, 0); g.drawImage(off, 0, 0, w, h);
+    pathOf(g, airfoil(120).map(q => [cx + (q[0] * P.ca + q[1] * P.sa) * s, cy - (-q[0] * P.sa + q[1] * P.ca) * s]));
+    g.closePath(); g.fillStyle = css('--body-fill'); g.fill(); g.strokeStyle = css('--ink'); g.lineWidth = 1; g.stroke();
+  },
+  mesh({ g, w, h }) {             // body-fitted O-grid with geometric wall growth
+    const s = w / 5.2, cx = w * .5, cy = h * .52, map = q => [cx + q[0] * s, cy - q[1] * s];
+    g.strokeStyle = css('--ink'); g.lineWidth = .55; g.globalAlpha = .5;
+    const rings = []; for (let k = 0; k < 26; k++) rings.push(airfoil(96, 1 + .01 * (Math.pow(1.24, k) - 1)).map(map));
+    rings.forEach(r => { pathOf(g, r); g.stroke(); });
+    g.beginPath(); for (let i = 0; i < 96; i++) rings.forEach((r, k) => k ? g.lineTo(r[i][0], r[i][1]) : g.moveTo(r[i][0], r[i][1])); g.stroke();
+    g.globalAlpha = 1; pathOf(g, rings[0]); g.closePath(); g.fillStyle = css('--body-fill'); g.fill(); g.strokeStyle = css('--accent'); g.lineWidth = 1.4; g.stroke();
+  },
+  cad({ g, w, h }) {              // three-element wing section with endplate and chord dimension
+    const ink = css('--ink'), acc = css('--accent'), base = airfoil(100);
+    const el = (sc, deg, tx, ty) => { const a = deg * Math.PI / 180, ca = Math.cos(a), sa = Math.sin(a); return base.map(q => [tx + (q[0] * ca + q[1] * sa) * sc, ty - (-q[0] * sa + q[1] * ca) * sc]); };
+    g.setLineDash([5, 4]); g.strokeStyle = ink; g.globalAlpha = .35; g.lineWidth = 1; g.strokeRect(w * .1, h * .1, w * .8, h * .68); g.setLineDash([]);
+    g.globalAlpha = 1;
+    [[w / 11, 5, w * .38, h * .56], [w / 22, 26, w * .66, h * .4], [w / 32, 44, w * .79, h * .27]].forEach((e, i) => {
+      pathOf(g, el(...e)); g.closePath(); g.fillStyle = css('--accent-soft'); g.fill(); g.strokeStyle = i ? ink : acc; g.lineWidth = 1.3; g.stroke();
+    });
+    const y = h * .88, x0 = w * .2, x1 = w * .56;
+    g.strokeStyle = ink; g.globalAlpha = .6; g.lineWidth = 1; g.beginPath(); g.moveTo(x0, y); g.lineTo(x1, y); g.moveTo(x0, y - 5); g.lineTo(x0, y + 5); g.moveTo(x1, y - 5); g.lineTo(x1, y + 5); g.stroke();
+    g.fillStyle = ink; g.font = '11px "IBM Plex Mono", monospace'; g.textAlign = 'center'; g.fillText('c', (x0 + x1) / 2, y - 6); g.globalAlpha = 1;
+  },
+  layup({ g, w, h }) {            // exploded ply stack around a foam core
+    const ink = css('--ink'), acc = css('--accent'), L = w * .44, sk = w * .1, d = h * .11, x0 = w * .08;
+    const plies = [['0°', 0], ['+45°', 45], ['foam core', null], ['−45°', -45], ['0°', 0]];
+    g.font = '10.5px "IBM Plex Mono", monospace'; g.textBaseline = 'middle';
+    plies.forEach(([label, ang], i) => {
+      const y = h * .1 + i * h * .16, p = [[x0 + sk, y], [x0 + sk + L, y], [x0 + L, y + d], [x0, y + d]];
+      g.save(); pathOf(g, p); g.closePath(); g.fillStyle = ang === null ? css('--accent-soft') : css('--body-fill'); g.fill(); g.clip();
+      if (ang !== null) {
+        g.strokeStyle = ink; g.globalAlpha = .3; g.lineWidth = .8; g.beginPath();
+        const t = Math.tan(ang * Math.PI / 180);
+        for (let k = -40; k < 80; k++) { if (ang === 0) { g.moveTo(x0 - 20 + k * 9 + sk, y); g.lineTo(x0 - 20 + k * 9, y + d); } else { g.moveTo(x0 + k * 11, y); g.lineTo(x0 + k * 11 + d * 1.6 * t, y + d); } }
+        g.stroke();
+      }
+      g.restore(); pathOf(g, p); g.closePath(); g.strokeStyle = ang === null ? acc : ink; g.globalAlpha = ang === null ? 1 : .7; g.lineWidth = 1.1; g.stroke(); g.globalAlpha = 1;
+      g.fillStyle = ang === null ? acc : ink; g.fillText(label, x0 + sk + L + 14, y + d / 2);
+    });
+  }
+};
+
+/* ---------- Boot ---------- */
+let rz = 0, lastW = innerWidth;
+addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { drawMesh(); if (innerWidth !== lastW) { lastW = innerWidth; flow.reset(); drawFigures(document); } }, 180); });
+repaint();
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => drawFigures(document));
+</script>
+</body>
+</html>
