@@ -25,7 +25,7 @@ All content below the hero lives in the `SITE` object near the top of the `<scri
 Append an object to `SITE.projects`. Cards share a row and expand on hover. Each item in `media` is either a real image or a generated placeholder:
 
 ```js
-{ src: 'img/gr27-cp.png', caption: 'Cp, front wing midspan' }   // real image
+{ src: 'img/gr27-cp.png', caption: 'Cp, front wing midspan' }   // real image (add fit: 'contain' to show it uncropped on white)
 { kind: 'contour', caption: 'Placeholder' }                      // 'contour' | 'mesh' | 'cad' | 'layup'
 ```
 

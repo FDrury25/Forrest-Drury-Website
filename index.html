@@ -37,6 +37,7 @@ try { var t = localStorage.getItem('fd-theme'); if (t === 'light' || t === 'dark
   --mesh-rgb: 16, 27, 43;
   --mesh-a: .075;
   /* velocity colour map, slow to fast */
+  --ok: #1B8A4B;
   --cm-0: #18A0B0; --cm-1: #2148C9; --cm-2: #B63C8E; --cm-3: #E8622C;
   --body-fill: #F6F8FA;
 
@@ -58,6 +59,7 @@ try { var t = localStorage.getItem('fd-theme'); if (t === 'light' || t === 'dark
     --accent-2: #5AD7E6;
     --blob-1: rgba(38, 110, 210, .34); --blob-2: rgba(255, 150, 50, .15); --blob-3: rgba(0, 195, 185, .17);
     --mesh-rgb: 190, 215, 240; --mesh-a: .06;
+    --ok: #5BD68A;
     --cm-0: #2E6BE6; --cm-1: #45D3E3; --cm-2: #FFD166; --cm-3: #FF7A59;
     --body-fill: #121821;
     color-scheme: dark;
@@ -74,6 +76,7 @@ try { var t = localStorage.getItem('fd-theme'); if (t === 'light' || t === 'dark
   --accent-2: #5AD7E6;
   --blob-1: rgba(38, 110, 210, .34); --blob-2: rgba(255, 150, 50, .15); --blob-3: rgba(0, 195, 185, .17);
   --mesh-rgb: 190, 215, 240; --mesh-a: .06;
+  --ok: #5BD68A;
   --cm-0: #2E6BE6; --cm-1: #45D3E3; --cm-2: #FFD166; --cm-3: #FF7A59;
   --body-fill: #121821;
   color-scheme: dark;
@@ -246,17 +249,22 @@ dl { margin: 0; }
 .card:hover, .card:focus-visible { border-color: var(--accent); }
 .media { position: relative; aspect-ratio: 16 / 9; max-width: 100%; overflow: hidden; background: var(--body-fill); flex: none; margin: 0; }
 .media canvas, .media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.media img.contain { object-fit: contain; }
+.media:has(img.contain) { background: #fff; }
 .media figcaption { position: absolute; left: 12px; bottom: 10px; padding: 3px 8px; border-radius: 6px; background: var(--glass-strong); font: 400 .66rem var(--f-mono); letter-spacing: .04em; color: var(--ink-2); }
 .card > .media { border-bottom: 1px solid var(--line); }
 .panel { display: flex; flex-direction: column; gap: 8px; padding: 16px 18px 18px; min-width: 0; }
 .status { display: inline-flex; align-items: center; gap: 7px; font: 500 .7rem var(--f-mono); letter-spacing: .05em; text-transform: uppercase; color: var(--ink-2); }
 .status::before { content: ""; flex: none; width: 6px; height: 6px; border-radius: 50%; background: var(--ink-3); }
 .status.live { color: var(--accent); }
+.status.done { color: var(--ok); }
+.status.done::before { background: var(--ok); }
 .status.live::before { background: var(--accent); animation: pulse 2.4s ease-out infinite; }
 @keyframes pulse { 0% { box-shadow: 0 0 0 0 var(--accent); } 70%, 100% { box-shadow: 0 0 0 7px transparent; } }
 .card h3 { font: 700 1.12rem/1.2 var(--f-display); font-stretch: 110%; letter-spacing: -.02em; }
 .extra { display: grid; grid-template-rows: 1fr; overflow: hidden; }
 .extra-in { display: flex; flex-direction: column; gap: 10px; min-height: 0; overflow: hidden; }
+.ex-col { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
 .extra-in p { color: var(--ink-2); font-size: .92rem; line-height: 1.5; }
 .metrics { display: flex; flex-wrap: wrap; gap: 8px 22px; }
 .metrics div { display: flex; flex-direction: column; gap: 2px; }
@@ -268,14 +276,15 @@ dl { margin: 0; }
 .more svg { width: 13px; height: 13px; }
 @media (hover: hover) and (min-width: 861px) {
   .grid { flex-direction: row; flex-wrap: wrap; }
-  .card { flex: 1 1 0; min-width: 190px; height: 370px; }
-  .card:hover, .card:focus-visible { flex-grow: 3.4; transition-delay: .08s; }
+  .card { flex: 1 1 0; min-width: 170px; height: 390px; }
+  .card:hover, .card:focus-visible { flex-grow: 6; transition-delay: .08s; }
   /* media keeps a fixed size and the card crops it, so figures never stretch mid-transition */
   .card > .media { position: absolute; top: 0; bottom: 0; left: 50%; width: max(780px, 100%); max-width: none; aspect-ratio: auto; transform: translateX(-50%); border-bottom: 0; }
   .card > .media figcaption { display: none; }
-  .panel { position: absolute; left: 12px; right: 12px; bottom: 12px; max-width: 430px; padding: 13px 16px 14px; border-radius: 12px; background: var(--glass-strong); border: 1px solid var(--glass-line); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
+  .card > .media img.contain { height: calc(100% - 96px); }   /* keep renders clear of the title panel */
+  .panel { position: absolute; left: 12px; right: 12px; bottom: 12px; padding: 13px 16px 14px; border-radius: 12px; background: var(--glass-strong); border: 1px solid var(--glass-line); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
   .extra { grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows .9s cubic-bezier(.5, 0, .15, 1), opacity .4s ease; }
-  .extra-in { min-width: 396px; }
+  .extra-in { min-width: 468px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 10px 24px; align-items: start; }   /* fixed measure: text does not reflow while the card grows */
   .card:hover .extra, .card:focus-visible .extra { grid-template-rows: 1fr; opacity: 1; transition: grid-template-rows 1s cubic-bezier(.5, 0, .15, 1) .25s, opacity .7s ease .55s; }
 }
 
@@ -409,7 +418,7 @@ dialog[open] { animation: pop .45s var(--ease); }
       </div>
     </div>
     <div class="flow-note mono fade-up" style="--d:1s" aria-hidden="true">
-      <span>Joukowski airfoil (My Favorite!)· Potential flow · α = −6°</span>
+      <span>Joukowski airfoil (my favorite!) · Potential flow · α = −6°</span>
       <span class="cbar">0.0 <b></b> 1.8 &nbsp;|V| / V∞</span>
     </div>
   </div>
@@ -512,7 +521,7 @@ const SITE = {
     skillsTitle: 'What I work with',
     galleryTitle: 'Some of my favorite photos',
     contactTitle: 'Get in touch',
-    contactText: 'I\'m open to internships & jobs in CFD, aerodynamics, or anything else. Feel free to reach out if you\'d like to learn more, I\'d love to talk to you about my work!.',
+    contactText: 'I\'m open to internships and jobs in CFD, aerodynamics, or anything else. Feel free to reach out if you\'d like to learn more. I\'d love to talk to you about my work!',
     footerNote: 'Updated: November 2026'
   },
 
@@ -556,14 +565,16 @@ const SITE = {
       points: [
         'Oversaw the design, manufacturing, testing and validation of the first operational aerodynamic package in Gaucho Racing\'s history.',
         'Directed a 20-engineer team through the full lifecycle of the package and defended designs in reviews with industry judges. Placed 30th of 100 teams, the program\'s highest score, with its 4th competition vehicle.',
-        'Developed and taught a fluid dynamics and CFD onboarding curriculum covering the theory, methods and applications of vehicle aerodynamics.'
+        'Developed and taught a fluid dynamics and CFD onboarding curriculum covering the theory, methods and applications of vehicle aerodynamics.',
+        'Developing the team\'s HPC simulation workflow on Linux clusters. Fluent runs are driven through the TUI and journal files instead of the GUI, so full-car cases can be set up, solved and post-processed in batch.',
+        'Scripting that workflow so a batch of design variants can be queued in one submission, and stress testing it on the GRX package before the rest of the team relies on it.'
       ]
     },
     {
       role: 'Racing Driver', dates: 'Jun 2025 – Present', current: true,
       points: [
-        'Drove our first eligible vehicle (GR26) at competition. managing pace, thermal limits and power. Set the team\'s fastest autocross & finished endurance in 20th out of 39 teams.',
-         'Completed the second stint endurance using 30% of avaliable SOC while keeping laptimes within 10% of the first stint. Finished with <2% charge left!', 
+        'Drove our first eligible vehicle (GR26) at competition, managing pace, thermal limits and power. Set the team\'s fastest autocross time and finished endurance 20th out of 39 teams.',
+        'Completed the second endurance stint using 30% of available SOC while keeping lap times within 10% of the first stint. Finished with under 2% charge left!',
         'Communicated vehicle dynamics and engineering feedback to the team, leading to direct suspension tuning and balance improvements.'
       ]
     },
@@ -590,9 +601,9 @@ const SITE = {
       ],
       tags: ['Ansys Fluent', 'SST k-ω', 'OptimumLap', 'SOLIDWORKS'],
       media: [
+        { src: 'img/gr27-render.webp', caption: 'GR27 full-car render', fit: 'contain' },
         { kind: 'contour', caption: 'Placeholder · velocity contour', alpha: -9 },
-        { kind: 'mesh', caption: 'Placeholder · surface and volume mesh' },
-        { kind: 'cad', caption: 'Placeholder · CAD render' }
+        { kind: 'mesh', caption: 'Placeholder · surface and volume mesh' }
       ],
       detail: {
         overview: [
@@ -612,6 +623,41 @@ const SITE = {
           ] },
           { heading: 'Manufacturing', items: [
             'Placeholder: molds, core materials and layup schedule.'
+          ] }
+        ]
+      }
+    },
+    {
+      id: 'grx',
+      title: 'GRX Maximum Performance Package',
+      status: 'In development', live: true, dates: '',
+      scope: 'Concept aerodynamic package and HPC workflow test case',
+      summary: 'A maximum performance aerodynamic package being designed to produce 1 kN of downforce. It is also the test case I am using to build out the team\'s HPC simulation workflow.',
+      metrics: [
+        { value: '1 kN', label: 'downforce target' }
+      ],
+      tags: ['Ansys Fluent', 'Linux HPC', 'TUI and journal files', 'Batch simulation'],
+      media: [
+        { src: 'img/grx-cad.png', caption: 'GRX CAD model', fit: 'contain' },
+        { kind: 'contour', caption: 'Placeholder · velocity contour', alpha: -11 }
+      ],
+      detail: {
+        overview: [
+          'GRX is a maximum performance aerodynamic package, designed to produce 1 kN of downforce.',
+          'It is deliberately a crazy package. I am using it to build out the HPC workflow, because a geometry this complex is a good way to find where the meshing, scripting and batch runs break.'
+        ],
+        specs: [
+          ['Role', 'Aerodynamics Team Lead'], ['Status', 'In development'], ['Target', '1 kN of downforce'],
+          ['Solver', 'Ansys Fluent, RANS'], ['Platform', 'Linux HPC cluster'], ['Control', 'TUI and journal files']
+        ],
+        sections: [
+          { heading: 'HPC workflow', items: [
+            'Fluent is run without the GUI, through TUI commands and journal files, on a Linux HPC cluster.',
+            'Cases are scripted so that a batch of design variants can be submitted and solved together.',
+            'Placeholder: cluster, core counts, cell counts and run times.'
+          ] },
+          { heading: 'Package', items: [
+            'Placeholder: element layout, speed for the 1 kN target, and how it compares to GR27.'
           ] }
         ]
       }
@@ -724,8 +770,9 @@ const root = document.documentElement;
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const ARROW = '<svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7h12M8 2l5 5-5 5"/></svg>';
 
+const statusClass = p => p.live ? ' live' : /complete/i.test(p.status) ? ' done' : '';
 const mediaHTML = (m, i) => `<figure class="media">${m.src
-  ? `<img src="${m.src}" alt="${m.caption || ''}" loading="lazy">`
+  ? `<img src="${m.src}" alt="${m.caption || ''}" loading="lazy"${m.fit === 'contain' ? ' class="contain"' : ''}>`
   : `<canvas class="fig" data-kind="${m.kind}" data-alpha="${m.alpha ?? -6}" data-seed="${i + 1}" role="img" aria-label="${m.caption || m.kind}"></canvas>`}
   ${m.caption ? `<figcaption>${m.caption}</figcaption>` : ''}</figure>`;
 
@@ -768,14 +815,14 @@ $('#projectGrid').innerHTML = SITE.projects.map((p, i) => `
   <article class="card glass" data-project="${p.id}" role="button" tabindex="0" aria-haspopup="dialog">
     ${mediaHTML(p.media[0], i)}
     <div class="panel">
-      <span class="status${p.live ? ' live' : ''}">${p.status}</span>
+      <span class="status${statusClass(p)}">${p.status}</span>
       <h3>${p.title}</h3>
       <div class="extra"><div class="extra-in">
-        <span class="mono">${p.dates}</span>
-        <p>${p.summary}</p>
-        <div class="metrics">${p.metrics.map(m => `<div><b>${m.value}</b><span>${m.label}</span></div>`).join('')}</div>
+        <div class="ex-col">${p.dates ? `<span class="mono">${p.dates}</span>` : ''}
+        <p>${p.summary}</p></div>
+        <div class="ex-col"><div class="metrics">${p.metrics.map(m => `<div><b>${m.value}</b><span>${m.label}</span></div>`).join('')}</div>
         <div class="tags">${p.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
-        <span class="more">View details ${ARROW}</span>
+        <span class="more">View details ${ARROW}</span></div>
       </div></div>
     </div>
   </article>`).join('');
@@ -799,7 +846,7 @@ function openProject(id) {
   const d = p.detail || {};
   sheet.innerHTML = `
     <div class="sheet-head">
-      <div><span class="status${p.live ? ' live' : ''}">${p.status}</span> <span class="mono">&nbsp;· ${p.dates}</span>
+      <div><span class="status${statusClass(p)}">${p.status}</span> ${p.dates ? `<span class="mono">&nbsp;· ${p.dates}</span>` : ''}
         <h3 id="detailTitle">${p.title}</h3><p class="mono" style="margin-top:8px">${p.scope}</p></div>
       <button type="button" class="x" aria-label="Close" data-close><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M1 1l10 10M11 1L1 11"/></svg></button>
     </div>
